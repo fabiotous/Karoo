@@ -1,0 +1,21 @@
+# Lesson Connecting React and REST API
+
+- Discuss changes from past project
+  - Seperated project into seperate frontend and backend node.js projects
+  - Note that we need two terminal windows to run both processes simultaneously
+  - the REST API has been slightly changed, but mostly the same
+  - the frontend has been drastically changed with React components and moving app.js functionality to each individual component
+- Let's run the project!
+- Let's add some search functionality
+  - add rest API on server.js
+  - create new React component
+- Let's add a Mongo Database
+  - Make sure MongoDB is installed and running
+  - Let's use Mongo Compass to explore what is here
+  - ```cd frontend && npm install```
+  - ```cd backend && npm install```
+  - install mongoose in the backend - ```npm install mongoose```
+  - create a "Book" schema and model
+  - Connect to Mongo Database in server.js (under the "backend" folder)
+  - let's create a function to add some test books to our database
+  - TODO: Change all the CRUD functions to connect to the database, rather than the JSON array.
