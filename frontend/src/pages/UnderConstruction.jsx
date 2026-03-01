@@ -1,9 +1,9 @@
 import React from 'react'
-//import '../css/under-construction.css';
+import '../css/under-construction.css';
 
 const UnderConstruction = () => {
   return (
-    <div>
+    <div className="under-construction-wrapper">
         <div className="container">
         <h1>Page Under Construction</h1>
         <p>
