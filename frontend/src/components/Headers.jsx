@@ -1,11 +1,12 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Headers = () => {
+    const navigate = useNavigate();
   return (
     <>
     <table className="header-table">
     <tr>
-            <td onClick="location.href='homepage.html'">
+            <td onClick={() => navigate('/home')}>
                 <div className="logo-container">
                     <img src="/images/logo.png" alt="Logo"/>
                 </div>
@@ -18,10 +19,10 @@ const Headers = () => {
                 </div>
             </td>
 
-            <td onClick="location.href='under-construction.html'">
+            <td onClick={() => navigate('/underconstruction')}>
                 Hello, Sign in
             </td>
-            <td onClick="location.href='under-construction.html'">
+            <td onClick={() => navigate('/underconstruction')}>
                 🛒 Cart
             </td>
         </tr>
@@ -29,12 +30,12 @@ const Headers = () => {
 
     <table className="nav-table">
         <tr>
-            <td><Link to="/home" className="nav-link">Home</Link></td>
-            <td><Link to="/about" className="nav-link">About</Link></td>
-            <td><Link to="/underconstruction" className="nav-link">Best Sellers</Link></td>
-            <td><Link to="/electronics" className="nav-link">Electronics</Link></td>
-            <td><Link to="/underconstruction" className="nav-link">Beauty</Link></td>
-            <td><Link to="/underconstruction" className="nav-link">Apparel</Link></td>
+            <td onClick={() => navigate('/home')}>Home</td>
+            <td onClick={() => navigate('/about')}>About</td>
+            <td onClick={() => navigate('/underconstruction')}>Best Sellers</td>
+            <td onClick={() => navigate('/electronics')}>Electronics</td>
+            <td onClick={() => navigate('/underconstruction')}>Beauty</td>
+            <td onClick={() => navigate('/underconstruction')}>Apparel</td>
         </tr>
     </table>
     </>
