@@ -1,17 +1,38 @@
 const express = require('express');
+const cors      = require('cors');
 const app = express();
 const path = require('path');
+const { default: mongoose } = require('mongoose');
+const Product = require('./models/Product');
+
 const PORT = 8080;
+const DATABASE_HOST = 'localhost';
+const DATABASE_PORT = 27017;
+
+//Enable CORS for frontend requests
+app.use(cors());
+
+//database connect
+const dbURL = `mongodb://${DATABASE_HOST}:${DATABASE_PORT}/product_library`;
+mongoose.connect(dbURL);
+
+const db = mongoose.connection;
+db.on('error', function(e) {
+    comnsole.log('error connecting:' + e);
+});
+db.on('open', function() {
+    console.log('database connected!');
+});
 
 // List of products
 let product_library = [
-    { pid:1, hasImage:true, title:"Beats Studio Pro - Beats by Dr. Dre", name:"beats", category:"Electronics", price:349.99, stock:4, note:""},
-    { pid:2, hasImage:true, title:"14 Inch Mac Book Pro - Apple", name:"macbookpro", category:"Electronics", price:2099, stock:2, note:""},
-    { pid:3, hasImage:true, title:"Pink iPhone 13 - Apple", name:"iphone", category:"Electronics", price:649.99, stock:6, note:""},
-    { pid:4, hasImage:true, title:"BL Clip 4 - Portable Mini Bluetooth Speaker", name:"jbl", category:"Electronics", price:69.98, stock:12, note:""},
-    { pid:5, hasImage:true, title:"INIU Wireless Charger, 15W Qi", name:"charger", category:"Electronics", price:25.99, stock:23, note:""},
-    { pid:6, hasImage:true, title:"Airpods 4 - Apple", name:"airpods", category:"Electronics", price:149.99, stock:8, note:""},
-    { pid:7, hasImage:true, title:"Meta Quest 3S 128GB | VR Headset", name:"metaquest", category:"Electronics", price:349.99, stock:3, note:""}
+    { pid:1, hasImage:true, title:"Beats Studio Pro - Beats by Dr. Dre", name:"beats", category:"Electronics", price:349.99, stock:4, inCart:false, note:""},
+    { pid:2, hasImage:true, title:"14 Inch Mac Book Pro - Apple", name:"macbookpro", category:"Electronics", price:2099, stock:2, inCart:false, note:""},
+    { pid:3, hasImage:true, title:"Pink iPhone 13 - Apple", name:"iphone", category:"Electronics", price:649.99, stock:6, inCart:false, note:""},
+    { pid:4, hasImage:true, title:"BL Clip 4 - Portable Mini Bluetooth Speaker", name:"jbl", category:"Electronics", price:69.98, stock:12, inCart:false, note:""},
+    { pid:5, hasImage:true, title:"INIU Wireless Charger, 15W Qi", name:"charger", category:"Electronics", price:25.99, stock:23, inCart:false, note:""},
+    { pid:6, hasImage:true, title:"Airpods 4 - Apple", name:"airpods", category:"Electronics", price:149.99, stock:8, inCart:false, note:""},
+    { pid:7, hasImage:true, title:"Meta Quest 3S 128GB | VR Headset", name:"metaquest", category:"Electronics", price:349.99, stock:3, inCart:false, note:""}
 ];
 
 app.use('/', express.static(path.join(__dirname, '../frontend/public')));
@@ -45,12 +66,39 @@ app.get('/staff.html', (req,res) => {
 /********* Defining (CRUD) API routes ************/
 /*************************************************/
 
+async function addTestProductsToMongoDB() {
+    const productCount = await Product.countDocuments();
+
+    if (productCount === 0) {
+        console.log('Adding test products to db ...');
+
+        product_library.forEach(product => {
+            const newProduct = new Product(product);
+            newProduct.save()
+                .then(() => console.log('Product added with Title' + product.title))
+                .catch(err => console.error('Error adding product with Title: ' + product.title + ' ' + err));
+        });
+    }
+    else {
+        console.log('Products already exist. Not adding test products.');
+        return;
+    }
+}
+addTestProductsToMongoDB();
+
 //GET HTTP method to get all products
-// TO DO
-app.get('/api/products', (req, res) => {
-    res.json(product_library);
-    console.log(product_library);  //want to see results for debugging
-});
+async function getAllProductsfromMongoDB() {
+    app.get('/api/products', async (req, res) => {
+        try {
+            const products = await Product.find({});           
+            console.log("Products found:", products.length);
+            res.json(products); 
+        } catch (err) {
+            console.error(err);
+        }
+    });
+}
+getAllProductsfromMongoDB();
 
 
 //GET HTTP except for PID 
