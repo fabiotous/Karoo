@@ -121,9 +121,8 @@ html, body {
 }
 
 
-/* ===== DO NOT PUT CSS of YOUR CONTENT ABOVE THIS LINE ===== */
-
-
+/* ===== DO NOT PUT CSS CONTENT ABOVE THIS LINE ===== */
+/* ===== START YOUR CSS HERE ===== */
 /* ===== MAIN CONTENT ===== */
 .content {
   flex: 1; /* grows to push footer down */
@@ -266,39 +265,139 @@ html, body {
         grid-template-columns: 1fr;
     }
 }
-/* ===== START YOUR CSS HERE ===== */
 
-/* ===== SLIDESHOW ===== */
-.slideshow-container {
-  max-width: 1300px;       /* controls width */
-  height: 350px;
-  margin: 30px auto;       /* centers horizontally */
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
-  border: 3px solid #ddd;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  background-color: #fff;
+/* ===== SLIDER SECTION ===== */
+.slider-section {
+    background: #ffffff;
+    padding: 20px 40px;
+    max-width: 1400px;
+    margin: 30px auto;
+    border-radius: 6px;
 }
 
-.slide {
-  display: block;
-  height: 100%;
+.slider-section h2 {
+    margin-bottom: 15px;
+    font-size: 22px;
+    font-weight: 600;
 }
 
-.slide img {
-  width: 100%;
-  height: 350px;
-  object-fit: cover;
+/* ===== SLIDER WRAPPER ===== */
+.slider-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
 }
 
-.fade {
-  animation: fadeEffect 1.5s;
+/* ===== HEADING SECTION ===== */
+.slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
 }
 
-@keyframes fadeEffect {
-  from { opacity: 0.4; }
-  to { opacity: 1; }
+.slider-header h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.see-all {
+    font-size: 14px;
+    color: #007185;
+    text-decoration: none;
+}
+
+.see-all:hover {
+    text-decoration: underline;
+}
+
+/* ===== SLIDER ===== */
+.slider {
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 15px 10px;
+    scrollbar-width: none; 
+}
+
+.slider::-webkit-scrollbar {
+    display: none; 
+}
+
+/* ===== PRODUCT CARD ===== */
+.card {
+    min-width: 220px;
+    height: 220px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    scroll-snap-align: start;
+    cursor: pointer;
+}
+
+.card a {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+/* ===== IMAGE STYLING ===== */
+.card img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+/* ===== HOVER EFFECT ===== */
+.card:hover img {
+    transform: scale(1.08);
+}
+
+/* ===== NAVIGATION ARROWS ===== */
+.nav {
+    background: #ffffff;
+    border: 1px solid #ddd;
+    font-size: 24px;
+    padding: 10px 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    transition: background 0.2s ease;
+}
+
+.nav:hover {
+    background: #f3f3f3;
+}
+
+.nav.left {
+    margin-right: 10px;
+}
+
+.nav.right {
+    margin-left: 10px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .slider-section {
+        padding: 15px;
+    }
+
+    .card {
+        min-width: 180px;
+        height: 180px;
+    }
+
+    .nav {
+        display: none; /* hide arrows on mobile, swipe instead */
+    }
 }
 
 /* ===== DO NOT PUT CSS ON YOUR CONTENT BELOW THIS LINE ===== */
