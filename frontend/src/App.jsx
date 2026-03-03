@@ -5,7 +5,6 @@ import About from './pages/About';
 import UnderConstruction from './pages/UnderConstruction';
 import ElectronicProducts from './pages/ElectronicProducts';
 import Staff from './pages/Staff';
-import DisplayBooks from './components/DisplayBooks';
 import SearchBook from './components/SearchBook';
 import NewBook from './components/NewBook';
 import UpdateBook from './components/UpdateBook';
