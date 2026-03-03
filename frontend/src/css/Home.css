@@ -121,8 +121,7 @@ html, body {
 }
 
 
-
-/* ===== DO NOT PUT CSS ON YOUR CONTENT ABOVE THIS LINE ===== */
+/* ===== DO NOT PUT CSS of YOUR CONTENT ABOVE THIS LINE ===== */
 
 
 /* ===== MAIN CONTENT ===== */
@@ -133,6 +132,140 @@ html, body {
   font-size: 24px;
 }
 
+/* ===== SLIDESHOW ===== */
+.slideshow-container {
+    max-width: 1300px;       /* controls width */
+    height: 350px;
+    margin: 30px auto;       /* centers horizontally */
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 3px solid #ddd;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    background-color: #fff;
+}
+
+.slide {
+    display: none;
+    height: 100%;
+}
+
+.slide img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+}
+
+.fade {
+    animation: fadeEffect 1.5s;
+}
+
+@keyframes fadeEffect {
+    from { opacity: 0.4; }
+    to { opacity: 1; }
+}
+
+/* ===== FEATURE SECTION ===== */
+.feature-section {
+    max-width: 1200px;
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.feature-card {
+    background: #fff;
+    padding: 16px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+.feature-card h3 {
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.feature-grid img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.feature-grid p {
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+.feature-card a {
+    display: inline-block;
+    margin-top: 12px;
+    color: #007185;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.feature-card a:hover {
+    text-decoration: underline;
+}
+
+/* ===== CLICKABLE FEATURE ITEMS ===== */
+.feature-item {
+    text-decoration: none;
+    color: #000;
+    display: block;
+}
+
+.feature-item img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 4px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-item p {
+    font-size: 14px;
+    margin-top: 4px;
+    transition: color 0.3s ease;
+}
+
+/* Hover effect */
+.feature-item:hover img {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.feature-item:hover p {
+    color: #007185;
+    text-decoration: underline;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1000px) {
+    .feature-section {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .feature-section {
+        grid-template-columns: 1fr;
+    }
+}
 /* ===== START YOUR CSS HERE ===== */
 
 /* ===== SLIDESHOW ===== */
