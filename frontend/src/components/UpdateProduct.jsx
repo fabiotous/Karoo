@@ -2,14 +2,14 @@ import { useState } from 'react';
 
 function UpdateProduct({ onProductUpdated }) {
   const [pid, setpid] = useState('');
-  const [note, setNote] = useState('');
+  const [price, setPrice] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     const updatedproduct = {};
-    if (note) {
-      updatedproduct.note = note;
+    if (price) {
+      updatedproduct.price = price;
     }
 
     try {
@@ -23,7 +23,7 @@ function UpdateProduct({ onProductUpdated }) {
       if (response.status === 200) {
         alert('product updated successfully!');
         setpid('');
-        setNote('');
+        setPrice('');
         if (onproductUpdated) onproductUpdated(); // Refresh the product list
       } else {
         alert('Error: ' + result.error);
@@ -36,7 +36,7 @@ function UpdateProduct({ onProductUpdated }) {
   return (
     <>
       <div id="update-product">
-        <h2>Add Note (Update product)</h2>
+        <h2>Change price (Update product)</h2>
         <form onSubmit={handleSubmit}>
           <input 
             type="number" 
@@ -46,10 +46,10 @@ function UpdateProduct({ onProductUpdated }) {
             required 
           />
           <input 
-            type="text" 
-            placeholder="New Note" 
-            value={note}
-            onChange={(e) => setNote(e.target.value)}
+            type="number" 
+            placeholder="New Price" 
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
             required 
           />
           <button type="submit">Update product</button>
