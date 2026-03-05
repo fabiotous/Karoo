@@ -30,7 +30,8 @@ Routes & API:
 | GET    | /api/products/search?title=:input | Retrieve a specific product by name     | 200 OK, 404 Not Found, 400 No Input |
 | POST   | /api/products                     | Add a new product to the list           | 201 Created, 400 Bad Request        |
 | PATCH  | /api/products/pid/:pid            | Updates a product's price               | 200 OK                              |
-| DELETE | /api/products/:pid                | Delete a product using its unique ID    | 200 OK, 404 Not Found               |
+| PATCH  | /api/products/:pid/cart           | Updates a product's in cart status      | 200 OK, 400 Bad Request             |
+| DELETE | /api/products/pid/:pid            | Delete a product using its unique ID    | 200 OK, 404 Not Found               |
 
 REFLECTION: 
 
