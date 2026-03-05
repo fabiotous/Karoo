@@ -1,16 +1,21 @@
-# React + Vite
+OVERVIEW
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This iteration of the project largely consisted of porting over the featurettes from assignment 1 to react in the case of the frontend and mongodb in the case of the 
+backend, as well as the addition of a cart functionality for users. Currently, the cart is in a fairly primitive form that relies on a field within the database to 
+show whether a product is in the cart or not, which generally limits the cart to be viable only for a single user. In the future this can be amended to use an alternate 
+schema that allows for a more efficient cart that exists uniquely for each user. Additionally, several of the pages of our assignment are still under construction, and will 
+be brought to full funcationality within future iterations of the assignment. 
 
-Currently, two official plugins are available:
+Documentation: 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-in the back end folder run the "npm i" and "npm i mongoose" commands from the terminal, then executing "npm i" and "npm i react-router-dom" in the front end folder.
 
-## React Compiler
+-run the assingment by executing the 'npm run start' command in the back end folder and 'npm run dev' in the front end. Navigate the website using 
+the page links in the header. Items can be searched via the search bar at the top, with partial rather than exact search being implemented. The CRUD 
+aspect of the assignment can be interacted with from the staff page, simply enter the appropriate fields for adding/removing/updating an aspect of a 
+particular document. 
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+REFLECTION: 
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+While there was initially a hurdle in adapting the existing CRUD and frontend components to the new REACT/MONGODB paradigm, once we got acclimated to the 
+peculiarities of both the project became a relatively straightforward porting job. We feel we are well-prepared to move on to the other phases of the project.
