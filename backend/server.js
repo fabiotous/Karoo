@@ -103,9 +103,9 @@ getAllProductsfromMongoDB();
 
 //GET HTTP except for PID 
 
-app.get('/api/products:pid', (req, res) => {
+app.get('/api/products:pid', async (req, res) => {
     const pid = parseInt(req.params.pid);
-    const product = product_library.find(b => b.pid === pid);
+    const product = await Product.findOne({pid : pid.toString()});
 
     if (product) {
         res.status(200).json(product); 
@@ -114,18 +114,34 @@ app.get('/api/products:pid', (req, res) => {
     }
 });
 
- //
+ app.patch('/api/products/pid/:pid', express.json(), async (req, res) => {
+    
+    const prodId = req.params.pid;
+    const updatedProd = req.body; 
+
+    const result = await Product.updateOne({pid : prodId.toString()}, {$set: updatedProd});
+
+    res.json(result);
+
+ });
 
 // POST HTTP method to add a new product
 // TO DO
 app.post('/api/products', express.json(), (req,res) => {
     const newProd = req.body;
 
-    if (newProd && newProd.title && newProd.name && newProd.category && newProd.price && newProd.stock) {
+    if (newProd && newProd.title && newProd.name && newProd.category && newProd.price && newProd.stock && newProd.note) {
         if (!newProd.hasImage) {
             newProd.hasImage = false; 
         }
-        product_library.push(newProd);
+        if (!newProd.inCart) {
+            newProd.inCart = false;
+        }
+        const nuProd = new Product(newProd);
+        nuProd.save()
+            .then(() => console.log('Product added ' + nuProd.pid))
+            .catch(err => console.error('error on' + nuProd.pid));
+
         res.status(201).json(newProd);
     } else {
         res.status(400).json({ error: "Invalid Product data" });
@@ -133,16 +149,15 @@ app.post('/api/products', express.json(), (req,res) => {
 }
 );
 
-
 // DELETE HTTP method to delete a product
 // TO DO
 
-app.delete('/api/products/pid/:pid', (req,res) => {
-    const prodId = parseInt(req.params.pid);
-    const prodIndex = product_library.findIndex(b => b.pid === prodId);
-    if (prodIndex !== -1) {
-        const deletedProd = product_library.splice(prodIndex, 1);
-        res.status(204).json(deletedProd[0]);
+app.delete('/api/products/pid/:pid', async (req,res) => {
+    const prodId = req.params.pid;
+    const result = await Product.deleteOne({pid : prodId.toString()});
+
+    if (result.deletedCount === 1) {
+        res.status(204).send();
     } else {
         res.status(404).json({error : "Product not found"});
     }

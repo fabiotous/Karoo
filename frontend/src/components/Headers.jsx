@@ -22,7 +22,7 @@ const Headers = () => {
             <td onClick={() => navigate('/underconstruction')}>
                 Hello, Sign in
             </td>
-            <td onClick={() => navigate('/cart')}>
+            <td onClick={() => navigate('/underconstruction')}>
                 🛒 Cart
             </td>
         </tr>

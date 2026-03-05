@@ -43,7 +43,7 @@ const ProductSchema = new mongoose.Schema({
     inCart: {
         type:       Boolean,
         unique:     false,
-        required:   true
+        required:   false
     },
     note: {
         type:       String,

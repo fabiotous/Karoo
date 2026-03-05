@@ -5,11 +5,8 @@ import About from './pages/About';
 import UnderConstruction from './pages/UnderConstruction';
 import ElectronicProducts from './pages/ElectronicProducts';
 import Staff from './pages/Staff';
-import Cart from './pages/Cart';
-import SearchBook from './components/SearchBook';
-import NewBook from './components/NewBook';
-import UpdateBook from './components/UpdateBook';
-import DeleteBook from './components/DeleteBook';
+//import SearchBook from './components/SearchBook';
+
 import Headers from './components/Headers';
 import Footers from './components/Footers';
 import './css/Home.css';
@@ -44,7 +41,6 @@ function App() {
         <Route path="/underconstruction" element={<UnderConstruction/>}/>
         <Route path="/electronics" element={<ElectronicProducts/>}/>
         <Route path="/staff" element={<Staff/>}/>
-        <Route path="/cart" element={<Cart/>}/>
       </Routes>
       <Footers></Footers>
     </BrowserRouter>
