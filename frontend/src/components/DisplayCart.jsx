@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function DisplayCart({ refreshTrigger }) {
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
 
   const loadCart = async () => {
     try {
@@ -20,11 +22,13 @@ function DisplayCart({ refreshTrigger }) {
     loadCart();
   }, [refreshTrigger]); // Reload when refreshTrigger changes
 
+  const totalPrice = products.reduce((sum, product) => sum + product.price, 0);
+
   if (products.length === 0) {
     return (
       <>
         <div>
-          <p>No products found.</p>
+          <p>No products found in cart.</p>
         </div>
       </>
     );
@@ -32,18 +36,28 @@ function DisplayCart({ refreshTrigger }) {
 
   return (
     <>
-      <div className="product-grid">
         {products.map(product => {
           const imageName = (product.hasImage ? product.name : 'PlaceholderProduct') + '.jpg';
           return (
-            <div key={product.pid} className="product-card">
-              <img src={`/images/electronic_products/${imageName}`} alt={product.title} />
-              <h3>{product.title}</h3>
-              <p>${product.price}</p>
+            <div key={product.pid} className="cart-item">
+                <div className="product-image">
+                    <img src={`/images/electronic_products/${imageName}`} alt={product.title} />
+                </div>
+                <div className="product-info"><h3 className="product-title">{product.title}</h3></div>
+                <div className="product-price">
+                    <span>${product.price}</span>
+                </div>
             </div>
           );
         })}
-      </div>
+        <div className="subtotal">
+            <span>Subtotal: ${totalPrice}</span>
+            <div className="checkout">
+                <button className="checkout-btn" onClick={() => navigate('/underconstruction')}>Proceed to Checkout</button>
+            </div>
+        </div>
+        
+        
     </>
   );
 }
