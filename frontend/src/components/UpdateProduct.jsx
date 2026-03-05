@@ -24,7 +24,7 @@ function UpdateProduct({ onProductUpdated }) {
         alert('product updated successfully!');
         setpid('');
         setPrice('');
-        if (onproductUpdated) onproductUpdated(); // Refresh the product list
+        if (onProductUpdated) onProductUpdated(); // Refresh the product list
       } else {
         alert('Error: ' + result.error);
       }

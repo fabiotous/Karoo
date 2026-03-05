@@ -12,9 +12,9 @@ const Footers = () => {
 
         <div className="footer-section">
             <h4>Follow Us</h4>
-            <a href="https://www.facebook.com" class="social-link">Facebook</a>
-            <a href="https://www.instagram.com" class="social-link">Instagram</a>
-            <a href="https://www.twitter.com" class="social-link">X (formerly Twitter)</a>
+            <a href="https://www.facebook.com" className="social-link">Facebook</a>
+            <a href="https://www.instagram.com" className="social-link">Instagram</a>
+            <a href="https://www.twitter.com" className="social-link">X (formerly Twitter)</a>
         </div>
 
         <div className="footer-section">

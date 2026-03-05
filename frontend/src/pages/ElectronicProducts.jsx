@@ -10,12 +10,12 @@ import '../css/electronic-products.css';
 const ElectronicProducts = () => {
   return (
     <>
-    <div class="content">
-      <div class="banner">
+    <div className="content">
+      <div className="banner">
           <img src="/images/electronic_products/elec-banner.jpg" alt="banner"/>
       </div>
 
-      <p class="description">
+      <p className="description">
         Karoo carries a wide selection of top-quality competitively priced electronic products. 
         We pride ourselves in sourcing only authentic products from the best brands and honour
         a 1 year warrantly on all products. Browse our growing selection below!

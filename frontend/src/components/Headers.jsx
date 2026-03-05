@@ -5,6 +5,7 @@ const Headers = () => {
   return (
     <>
     <table className="header-table">
+    <tbody>
     <tr>
             <td onClick={() => navigate('/home')}>
                 <div className="logo-container">
@@ -13,7 +14,7 @@ const Headers = () => {
             </td>
 
             <td>
-                <div class="search-bar">
+                <div className="search-bar">
                     <input type="text" id="searchInput" placeholder="Search products..."/>
                     <button id="searchBtn">🔍</button>
                 </div>
@@ -26,9 +27,11 @@ const Headers = () => {
                 🛒 Cart
             </td>
         </tr>
+    </tbody>
     </table>
 
     <table className="nav-table">
+        <tbody>
         <tr>
             <td onClick={() => navigate('/home')}>Home</td>
             <td onClick={() => navigate('/about')}>About</td>
@@ -37,6 +40,7 @@ const Headers = () => {
             <td onClick={() => navigate('/underconstruction')}>Beauty</td>
             <td onClick={() => navigate('/underconstruction')}>Apparel</td>
         </tr>
+        </tbody>
     </table>
     </>
   )
