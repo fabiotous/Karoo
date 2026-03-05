@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import SearchProduct from './SearchProduct';
 
 const Headers = () => {
     const navigate = useNavigate();
@@ -14,10 +15,7 @@ const Headers = () => {
             </td>
 
             <td>
-                <div className="search-bar">
-                    <input type="text" id="searchInput" placeholder="Search products..."/>
-                    <button id="searchBtn">🔍</button>
-                </div>
+               <SearchProduct></SearchProduct>
             </td>
 
             <td onClick={() => navigate('/underconstruction')}>
