@@ -103,6 +103,22 @@ getAllProductsfromMongoDB();
 
 //GET HTTP except for PID 
 
+app.get('/api/products/search', async (req, res) => {
+    const prodTitle = req.query.title; 
+
+    if (!prodTitle) {
+        return res.status(400).json({error : "Please enter in a product name"});
+    }
+
+    const prods = await Product.find({title : {$regex: prodTitle, $options: "i"}});
+
+    if (prods.length > 0) {
+        res.status(200).json(prods); 
+    } else {
+        res.status(404).json({ error: "No prods found" });
+    }
+});
+
 app.get('/api/products:pid', async (req, res) => {
     const pid = parseInt(req.params.pid);
     const product = await Product.findOne({pid : pid.toString()});
