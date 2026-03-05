@@ -1,0 +1,35 @@
+.under-construction-wrapper {
+    margin: 0;
+    background: linear-gradient(135deg, #f5f7fa, #e4e7eb);
+    min-height: 100vh;        
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.under-construction-wrapper .container {
+    background-color: #ffffff;
+    padding: 40px 50px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 500px;
+}
+
+.under-construction-wrapper h1 {
+    margin-bottom: 15px;
+    font-size: 28px;
+    color: #333;
+}
+
+.under-construction-wrapper p {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.6;
+}
+
+.under-construction-wrapper .note {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #999;
+}
