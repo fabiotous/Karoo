@@ -15,6 +15,23 @@ the page links in the header. Items can be searched via the search bar at the to
 aspect of the assignment can be interacted with from the staff page, simply enter the appropriate fields for adding/removing/updating an aspect of a 
 particular document. 
 
+Routes & API:
+
+"/" & "/home" -> lead to the HomePage screen
+"/about" -> leads to the About screen
+"/underconstruction" -> leads to the Under Construction screen
+"/electronics" -> leads to the Electronic Products screen
+"/staff" -> leads to the Staff screen
+"/cart" -> leads to the Cart screen
+
+| Method | Endpoint                          | Description                             | Status Codes                        |
+| ------ | --------------------------------- | --------------------------------------- | ----------------------------------- |
+| GET    | /api/products                     | Retrieve the list of available products | 200 OK                              |
+| GET    | /api/products/search?title=:input | Retrieve a specific product by name     | 200 OK, 404 Not Found, 400 No Input |
+| POST   | /api/products                     | Add a new product to the list           | 201 Created, 400 Bad Request        |
+| PATCH  | /api/products/pid/:pid            | Updates a product's price               | 200 OK                              |
+| DELETE | /api/products/:pid                | Delete a product using its unique ID    | 200 OK, 404 Not Found               |
+
 REFLECTION: 
 
 While there was initially a hurdle in adapting the existing CRUD and frontend components to the new REACT/MONGODB paradigm, once we got acclimated to the 
