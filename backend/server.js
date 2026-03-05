@@ -163,6 +163,17 @@ app.delete('/api/products/pid/:pid', async (req,res) => {
     }
 });
 
+// PATCH HTTP method for updating product.inCart
+app.patch('/api/products/:pid/cart', express.json(), async (req, res) => {
+    const { pid } = req.params;
+    const { inCart } = req.body;  
+    const product = await Product.findOneAndUpdate(
+        { pid },
+        { $set: { inCart } }
+      );
+    res.json(product);
+    });
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on Port ${PORT}`);

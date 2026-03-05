@@ -51,7 +51,7 @@ function DisplayCart({ refreshTrigger }) {
           );
         })}
         <div className="subtotal">
-            <span>Subtotal: ${totalPrice}</span>
+            <span>Subtotal: ${totalPrice.toFixed(2)}</span>
             <div className="checkout">
                 <button className="checkout-btn" onClick={() => navigate('/underconstruction')}>Proceed to Checkout</button>
             </div>

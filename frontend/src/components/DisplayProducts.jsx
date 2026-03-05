@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 function DisplayProducts({ refreshTrigger }) {
   const [products, setProducts] = useState([]);
+  const [loadingAction, setLoadingAction] = useState({}); // pid → true/false
 
   const loadProducts = async () => {
     try {
@@ -18,6 +19,30 @@ function DisplayProducts({ refreshTrigger }) {
   useEffect(() => {
     loadProducts();
   }, [refreshTrigger]); // Reload when refreshTrigger changes
+
+  const toggleCart = async (pid, currentInCart) => {
+    const newInCart = !currentInCart;
+
+    setLoadingAction(prev => ({ ...prev, [pid]: true }));
+
+    try {
+      const res = await fetch(`/api/products/${pid}/cart`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ inCart: newInCart }),
+      });
+
+      if (!res.ok) throw new Error('Failed to update cart');
+
+      await loadProducts();
+
+    } catch (err) {
+      console.error(err);
+      alert('Could not update cart. Please try again.');
+    } finally {
+      setLoadingAction(prev => ({ ...prev, [pid]: false }));
+    }
+  };
 
   if (products.length === 0) {
     return (
@@ -39,6 +64,7 @@ function DisplayProducts({ refreshTrigger }) {
               <img src={`/images/electronic_products/${imageName}`} alt={product.title} />
               <h3>{product.title}</h3>
               <p>${product.price}</p>
+              {product.inCart ? (<button className="cart-btn" onClick={() => toggleCart(product.pid, true)}>Remove from Cart</button>) : (<button className="cart-btn" onClick={() => toggleCart(product.pid, false)}>Add to Cart</button>)}
             </div>
           );
         })}

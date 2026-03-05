@@ -75,19 +75,15 @@
   }
 
   .checkout-btn {
-    padding: 5px;
-    background: #ffcc47;           
+    padding: 5px 11px;
+    background: #ffce12;           
     color: #1a1a1a;
     font-size: 15px;
-    font-weight: 600;
     border: none;
-    border-radius: 50px;           
-    box-shadow: 0 4px 12px rgba(255, 170, 0, 0.3);
-    transition: transform 0.2s, box-shadow 0.2s;
+    border-radius: 50px;  
   }
   
   .checkout-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(255, 170, 0, 0.4);
+    background: #f8bd19;  
     cursor: pointer;
   }

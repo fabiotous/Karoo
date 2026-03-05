@@ -156,6 +156,7 @@ html, body {
   flex-direction: column;
   align-items: center;   /* horizontal center */
   justify-content: center;
+  padding: 8px 16px;
 }
 
 .product-card img {
@@ -176,6 +177,20 @@ html, body {
   font-weight: bold;
   color: #752626 
 }
+
+.cart-btn {
+    padding: 5px 11px;
+    background: #ffce12;           
+    color: #1a1a1a;
+    font-size: 15px;
+    border: none;
+    border-radius: 50px;           
+  }
+  
+  .cart-btn:hover {
+    background: #f8bd19;  
+    cursor: pointer;
+  }
 
 
 
