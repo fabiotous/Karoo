@@ -43,7 +43,7 @@ function SearchProduct() {
 
   return (
     <>
-      <div id="search-Product">
+      <div id="search-Product" className="search-bar">
         <h2>Search Products by name</h2>
         <form onSubmit={handleSubmit}>
           <input 
@@ -56,7 +56,7 @@ function SearchProduct() {
               setSearched(false);
             }}
           />
-          <button type="submit">Search</button>
+          <button type="submit">🔍</button>
         </form>
         
         {/* this is a shorthand way of saying if searched is true, render the following block */
@@ -68,10 +68,10 @@ function SearchProduct() {
               <div id="search-results">
                 <h3>Search Results for "{title}"</h3>
                 {Products.map(Product => {
-                  const imageName = (Product.hasImage ? Product.pid : 'PlaceholderProduct') + '.jpg';
+                  const imageName = (Product.hasImage ? Product.name : 'PlaceholderProduct') + '.jpg';
                   return (
                     <div key={Product.pid}>
-                      <img src={`/images/Products/${imageName}`} height="100" alt={Product.title} />
+                      <img src={`/images/electronic_products/${imageName}`} height="100" alt={Product.title} />
                       <p>
                         PID: {Product.pid}, name: {Product.title}, 
                         price: {Product.price}, stock: {Product.stock}
