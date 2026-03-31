@@ -8,8 +8,9 @@ const Headers = () => {
 
     const handleLogout = () => {
         localStorage.removeItem("token");
-        navigate('/home');
+        navigate("/signin"); // Redirect to sign-in page after logout
     };
+
   return (
     <>
     <table className="header-table">
@@ -22,9 +23,10 @@ const Headers = () => {
             </td>
 
             <td>
-               <SearchProduct></SearchProduct>
+               <SearchProduct />
             </td>
 
+            {/*  INSIDE RETURN */}
             <td>
                 {token ? (
                     <span onClick={handleLogout} style={{ cursor: "pointer" }}>
@@ -60,4 +62,4 @@ const Headers = () => {
   )
 }
 
-export default Headers
+export default Headers;

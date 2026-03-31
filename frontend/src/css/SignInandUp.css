@@ -1,0 +1,70 @@
+/* Full page background */
+.signin-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  background: linear-gradient(to right, #e4dfea, #696b6f);
+  font-family: 'Arial', sans-serif;
+}
+
+/* Card */
+.signin-card {
+  background: #fff;
+  padding: 40px 50px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  width: 350px;
+}
+
+/* Title */
+.signin-title {
+  margin-bottom: 30px;
+  color: #333;
+}
+
+/* Input Fields */
+.signin-input {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+/* Sign In Button */
+.signin-button {
+  width: 100%;
+  padding: 12px 15px;
+  margin-top: 15px;
+  background-color: #2575fc;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.signin-button:hover {
+  background-color: #6a11cb;
+}
+
+/* Sign Up Text */
+.signup-text {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #555;
+}
+
+.signup-link {
+  color: #2575fc;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.signup-link:hover {
+  text-decoration: underline;
+}

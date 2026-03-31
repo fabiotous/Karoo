@@ -10,23 +10,61 @@ import Cart from './pages/Cart';
 import Headers from './components/Headers';
 import Footers from './components/Footers';
 import './css/Home.css';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
 
   return(
     <BrowserRouter>
       <Headers></Headers>
-      <Routes>
-        <Route path="/" element={<HomePage/>}/>
-        <Route path="/home" element={<HomePage/>}/>
-        <Route path="/about" element={<About/>}/>
-        <Route path="/underconstruction" element={<UnderConstruction/>}/>
-        <Route path="/electronics" element={<ElectronicProducts/>}/>
-        <Route path="/staff" element={<Staff/>}/>
-        <Route path="/cart" element={<Cart/>}/>
-        <Route path="/signin" element={<SignIn/>}/>
-        <Route path="/signup" element={<SignUp/>}/>
-      </Routes>
+<Routes>
+  {/* Public routes */}
+  <Route path="/signin" element={<SignIn/>}/>
+  <Route path="/signup" element={<SignUp/>}/>
+
+  {/* Protected routes */}
+  <Route path="/" element={
+    <ProtectedRoute>
+      <HomePage/>
+    </ProtectedRoute>
+  }/>
+
+  <Route path="/home" element={
+    <ProtectedRoute>
+      <HomePage/>
+    </ProtectedRoute>
+  }/>
+
+  <Route path="/about" element={
+    <ProtectedRoute>
+      <About/>
+    </ProtectedRoute>
+  }/>
+
+  <Route path="/underconstruction" element={
+    <ProtectedRoute>
+      <UnderConstruction/>
+    </ProtectedRoute>
+  }/>
+
+  <Route path="/electronics" element={
+    <ProtectedRoute>
+      <ElectronicProducts/>
+    </ProtectedRoute>
+  }/>
+
+  <Route path="/staff" element={
+    <ProtectedRoute>
+      <Staff/>
+    </ProtectedRoute>
+  }/>
+
+  <Route path="/cart" element={
+    <ProtectedRoute>
+      <Cart/>
+    </ProtectedRoute>
+  }/>
+</Routes>
       <Footers></Footers>
     </BrowserRouter>
   )

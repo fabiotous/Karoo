@@ -1,22 +1,20 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import '../css/SignInandUp.css';
 
 const Signup = () => {
-  const [email, setEmail] = useState("");
+  const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleSignup = async () => {
     try {
-      // POST to your backend signup route
       const res = await axios.post("http://localhost:8080/api/auth/signup", {
-        email,
+        username,
         password,
       });
-
       alert(res.data.message || "Signup successful!");
-      // Redirect to login page after signup
       navigate("/signin");
     } catch (err) {
       console.error(err.response?.data);
@@ -25,30 +23,37 @@ const Signup = () => {
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h2>Sign Up</h2>
+    <div className="signin-container">
+      <div className="signin-card">
+        <h2 className="signin-title">Sign Up</h2>
 
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <br /><br />
+        <input
+          type="username"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setusername(e.target.value)}
+          className="signin-input"
+        />
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <br /><br />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="signin-input"
+        />
 
-      <button onClick={handleSignup}>Sign Up</button>
-      <br /><br />
+        <button className="signin-button" onClick={handleSignup}>
+          Sign Up
+        </button>
 
-      {/* Sign In Button */}
-      <button onClick={() => navigate("/signin")}>Sign In</button>
+        <p className="signup-text">
+          Already have an account?{" "}
+          <span className="signup-link" onClick={() => navigate("/signin")}>
+            Sign In
+          </span>
+        </p>
+      </div>
     </div>
   );
 };
