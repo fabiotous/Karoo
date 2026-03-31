@@ -4,6 +4,7 @@ const app = express();
 const path = require('path');
 const { default: mongoose } = require('mongoose');
 const Product = require('./models/Product');
+const authRoutes = require("./routes/auth");
 
 const PORT = 8080;
 const DATABASE_HOST = 'localhost';
@@ -11,6 +12,12 @@ const DATABASE_PORT = 27017;
 
 //Enable CORS for frontend requests
 app.use(cors());
+
+// Parse JSON bodies
+app.use(express.json());
+
+// === AUTH ROUTES ===
+app.use("/api/auth", authRoutes);
 
 //database connect
 const dbURL = `mongodb://${DATABASE_HOST}:${DATABASE_PORT}/product_library`;
