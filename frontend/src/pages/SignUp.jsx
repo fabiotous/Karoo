@@ -4,14 +4,14 @@ import axios from "axios";
 import '../css/SignInandUp.css';
 
 const Signup = () => {
-  const [username, setusername] = useState("");
+  const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleSignup = async () => {
     try {
       const res = await axios.post("http://localhost:8080/api/auth/signup", {
-        username,
+        email,
         password,
       });
       alert(res.data.message || "Signup successful!");
@@ -28,10 +28,10 @@ const Signup = () => {
         <h2 className="signin-title">Sign Up</h2>
 
         <input
-          type="username"
+          type="email"
           placeholder="Username"
-          value={username}
-          onChange={(e) => setusername(e.target.value)}
+          value={email}
+          onChange={(e) => setemail(e.target.value)}
           className="signin-input"
         />
 
