@@ -396,7 +396,7 @@ html, body {
     }
 
     .nav {
-        display: none; /* hide arrows on mobile, swipe instead */
+        display: none; 
     }
 }
 

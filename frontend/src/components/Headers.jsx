@@ -3,6 +3,13 @@ import SearchProduct from './SearchProduct';
 
 const Headers = () => {
     const navigate = useNavigate();
+
+    const token = localStorage.getItem("token");
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate('/home');
+    };
   return (
     <>
     <table className="header-table">
@@ -18,9 +25,18 @@ const Headers = () => {
                <SearchProduct></SearchProduct>
             </td>
 
-            <td onClick={() => navigate('/underconstruction')}>
-                Hello, Sign in
+            <td>
+                {token ? (
+                    <span onClick={handleLogout} style={{ cursor: "pointer" }}>
+                        Sign Out
+                    </span>
+                ) : (
+                    <span onClick={() => navigate('/signin')} style={{ cursor: "pointer" }}>
+                        Hello, Sign In
+                    </span>
+                )}
             </td>
+
             <td onClick={() => navigate('/cart')}>
                 🛒 Cart
             </td>
