@@ -1,21 +1,50 @@
-OVERVIEW
+# CPS630 ASSIGNMENT 3 - Karoo (E-Commerce Web Application)
 
-This iteration of the project largely consisted of porting over the featurettes from assignment 1 to react in the case of the frontend and mongodb in the case of the 
-backend, as well as the addition of a cart functionality for users. Currently, the cart is in a fairly primitive form that relies on a field within the database to 
-show whether a product is in the cart or not, which generally limits the cart to be viable only for a single user. In the future this can be amended to use an alternate 
-schema that allows for a more efficient cart that exists uniquely for each user. Additionally, several of the pages of our assignment are still under construction, and will 
-be brought to full funcationality within future iterations of the assignment. 
+## Names
 
-Documentation: 
+1. Humaira Adeeb | 501030823
+2. Mykhaylo Batashov | 501092777
+3. Fabio Tous | 501111871
+4. Chloe Chartrand | 500946522
 
--in the back end folder run the "npm i" and "npm i mongoose" commands from the terminal, then executing "npm i" and "npm i react-router-dom" in the front end folder.
+## Overview
 
--run the assingment by executing the 'npm run start' command in the back end folder and 'npm run dev' in the front end. Navigate the website using 
-the page links in the header. Items can be searched via the search bar at the top, with partial rather than exact search being implemented. The CRUD 
-aspect of the assignment can be interacted with from the staff page, simply enter the appropriate fields for adding/removing/updating an aspect of a 
-particular document. 
+Karoo is a full-stack e-commerce web application developed using the MERN stack (MongoDB, Express, React, Node.js). This final iteration builds upon previous versions by integrating a complete client-server architecture, persistent database storage, user authentication, and real-time communication.
 
-Routes & API:
+The application allows users to browse products, search items, manage a shopping cart, and interact with a dynamic and responsive user interface. Each user has their own account and personalized data, enabled through authentication and database integration.
+
+To meet the project requirements, the application includes:
+
+A React frontend with a user-friendly and responsive UI
+A Node.js + Express backend with RESTful API routes
+A MongoDB database for persistent data storage
+User authentication allowing multiple users to log in and manage their own data
+Real-time communication using Socket.io
+A UI designed using Nielsen usability principles to ensure usability and accessibility
+
+This project demonstrates a complete modern web application workflow from frontend design to backend API development and database management.
+
+## Documentation
+
+How to Run the Project:
+
+1. Clone or download the project repository.
+2. Navigate to the backend folder and install dependencies:
+```
+npm install
+npm install mongoose
+```
+3. Navigate to the frontend folder and install dependencies:
+```
+npm install
+npm install react-router-dom
+```
+4. Start the application:
+Backend: `npm run start`
+Frontend: `npm run dev`
+5. Open your browser and go to: http://localhost:3000
+
+## Routes & API:
 
 "/" & "/home" -> lead to the HomePage screen
 "/about" -> leads to the About screen
@@ -33,7 +62,9 @@ Routes & API:
 | PATCH  | /api/products/:pid/cart           | Updates a product's in cart status      | 200 OK, 400 Bad Request             |
 | DELETE | /api/products/pid/:pid            | Delete a product using its unique ID    | 200 OK, 404 Not Found               |
 
-REFLECTION: 
+These endpoints enable communication between the client-side pages and the server, demonstrating proper use of HTTP methods and RESTful design principles.
 
-While there was initially a hurdle in adapting the existing CRUD and frontend components to the new REACT/MONGODB paradigm, once we got acclimated to the 
-peculiarities of both the project became a relatively straightforward porting job. We feel we are well-prepared to move on to the other phases of the project.
+## Reflection: 
+
+### Challenges
+### Successes
