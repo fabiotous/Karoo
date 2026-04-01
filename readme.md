@@ -46,12 +46,15 @@ Frontend: `npm run dev`
 
 ## Routes & API:
 
-"/" & "/home" -> lead to the HomePage screen
-"/about" -> leads to the About screen
-"/underconstruction" -> leads to the Under Construction screen
-"/electronics" -> leads to the Electronic Products screen
-"/staff" -> leads to the Staff screen
-"/cart" -> leads to the Cart screen
+### Frontend Routes
+- `/` or `/home` → Home Page
+- `/about` → About Page
+- `/electronics` → Products Page
+- `/cart` → Cart Page
+- `/staff` → Staff/Admin Page
+- `/underconstruction` → Future Features
+
+### Backend API
 
 | Method | Endpoint                          | Description                             | Status Codes                        |
 | ------ | --------------------------------- | --------------------------------------- | ----------------------------------- |
@@ -64,7 +67,26 @@ Frontend: `npm run dev`
 
 These endpoints enable communication between the client-side pages and the server, demonstrating proper use of HTTP methods and RESTful design principles.
 
+### Key Features
+- Full MERN stack implementation
+- RESTful API design
+- MongoDB database integration
+- User authentication system
+- Individual user data handling
+- Shopping cart functionality
+- Real-time communication (Socket.io)
+- Responsive and intuitive UI
+
 ## Reflection: 
 
+This assignment provided valuable hands-on experience in building a complete web application from the ground up using modern technologies. It allowed us to apply theoretical concepts such as RESTful API design, client-server architecture, and usability principles in a practical setting. Compared to earlier iterations, this final submission helped reinforce our understanding of full-stack development by requiring the integration of multiple technologies into one cohesive system.
+
+Through this assignment, we gained a deeper appreciation for the complexity of real-world applications, particularly in areas such as authentication, database management, and real-time communication. It also emphasized the importance of planning, debugging, and iterative development. Overall, this assignment was a significant learning experience that strengthened both our technical skills and our ability to work collaboratively as a team.
+
 ### Challenges
+
+One of the main challenges in this project was integrating all components of the MERN stack while ensuring smooth communication between the frontend, backend, and database. Implementing authentication was particularly complex, as it required securely managing user sessions and ensuring that each user’s data remained separate and protected. Additionally, incorporating real-time communication using Socket.io introduced difficulties related to event handling and maintaining synchronization between multiple clients and the server. Debugging API routes and maintaining consistent data updates across the application also required careful testing and coordination across all parts of the system.
+
 ### Successes
+
+A major success of this project was successfully developing a complete full-stack application that meets all the requirements of the MERN architecture. We were able to transition from a basic client-server model to a fully functional application with persistent data storage using MongoDB. The implementation of user authentication and individualized user data significantly enhanced the realism and usability of the application. Additionally, integrating a responsive React frontend with a RESTful API and real-time features demonstrated our understanding of modern web development practices. The project also highlighted strong teamwork, as tasks were effectively divided and integrated into a cohesive final product.
