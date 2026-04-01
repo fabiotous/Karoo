@@ -55,6 +55,7 @@ const Headers = () => {
             <td onClick={() => navigate('/electronics')}>Electronics</td>
             <td onClick={() => navigate('/underconstruction')}>Beauty</td>
             <td onClick={() => navigate('/underconstruction')}>Apparel</td>
+
         </tr>
         </tbody>
     </table>

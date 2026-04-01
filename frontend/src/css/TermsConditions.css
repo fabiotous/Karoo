@@ -1,0 +1,43 @@
+.policy-container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 40px 30px;
+  background: #cdcaca !important; /* force light grey background */
+  color: #191818;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.policy-container p,
+.policy-container ul,
+.policy-container ul li {
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 18px;
+  color: #000; /* make all text black */
+}
+
+.policy-container h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #191818;
+}
+
+.policy-container h2 {
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+  color: #191818;
+}
+
+.policy-container p, 
+.policy-container ul {
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+
+.policy-container ul li {
+  margin-left: 20px;
+  list-style-type: disc;
+}

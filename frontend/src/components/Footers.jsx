@@ -19,11 +19,11 @@ const Footers = () => {
 
         <div className="footer-section">
             <h4>Quick Links</h4>
-            <Link to="/underconstruction">FAQs</Link>
-            <Link to="/underconstruction">About Us</Link>
-            <Link to="/underconstruction">Private Policy</Link>
-            <Link to="/underconstruction">Terms & Conditions</Link>
-            <Link to="/underconstruction">Shipping & Returns</Link>
+            <Link to="/faq">FAQs</Link>
+            <Link to="/about">About Us</Link>
+            <Link to="/privacy">Privacy Policy</Link>
+            <Link to="/terms">Terms & Conditions</Link>
+            <Link to="/shipping">Shipping & Returns</Link>
             <Link to="/staff">Staff Portal</Link>
         </div>
     </div>

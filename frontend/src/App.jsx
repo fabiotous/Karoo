@@ -11,6 +11,10 @@ import Headers from './components/Headers';
 import Footers from './components/Footers';
 import './css/Home.css';
 import ProtectedRoute from './components/ProtectedRoute';
+import FAQ from './pages/FAQ';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsConditions from './pages/TermsConditions';
+import ShippingReturns from './pages/ShippingReturns';
 
 function App() {
 
@@ -21,6 +25,11 @@ function App() {
   {/* Public routes */}
   <Route path="/signin" element={<SignIn/>}/>
   <Route path="/signup" element={<SignUp/>}/>
+  <Route path="/about" element={<About/>}/>
+  <Route path="/faq" element={<FAQ/>}/>
+  <Route path="/privacy" element={<PrivacyPolicy />} />
+  <Route path="/terms" element={<TermsConditions />} />
+  <Route path="/shipping" element={<ShippingReturns />} />
 
   {/* Protected routes */}
   <Route path="/" element={
@@ -32,12 +41,6 @@ function App() {
   <Route path="/home" element={
     <ProtectedRoute>
       <HomePage/>
-    </ProtectedRoute>
-  }/>
-
-  <Route path="/about" element={
-    <ProtectedRoute>
-      <About/>
     </ProtectedRoute>
   }/>
 
