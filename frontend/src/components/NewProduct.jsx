@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import React, { useEffect } from 'react';
 
-function NewProduct({ onProductAdded }) {
+
+function NewProduct({ onProductAdded, socket }) {
   const [formData, setFormData] = useState({
     pid: '',
     title: '',
@@ -34,6 +36,7 @@ function NewProduct({ onProductAdded }) {
       
       if (response.status === 201) {
         alert('Product added successfully!');
+        socket.emit('new_product_added', newProduct);
         setFormData({ pid: '', title: '', name: '', category: '', price: '' , stock: '', note: ''}); // Reset form
         if (onProductAdded) onProductAdded(); // Refresh the product list
       } else {

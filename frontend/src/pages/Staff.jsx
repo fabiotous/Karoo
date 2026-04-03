@@ -3,12 +3,12 @@ import NewProduct from '../components/NewProduct';
 import UpdateProduct from '../components/UpdateProduct';
 import DeleteProduct from '../components/DeleteProduct';
 
-const Staff = () => {
+const Staff = ({ socket }) => {
   return (
     <div>
-        <NewProduct></NewProduct>
-        <UpdateProduct></UpdateProduct>
-        <DeleteProduct></DeleteProduct>
+        <NewProduct socket = {socket}></NewProduct>
+        <UpdateProduct socket = {socket}></UpdateProduct>
+        <DeleteProduct socket = {socket}></DeleteProduct>
     </div>
   );
 }

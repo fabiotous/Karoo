@@ -15,8 +15,21 @@ import FAQ from './pages/FAQ';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsConditions from './pages/TermsConditions';
 import ShippingReturns from './pages/ShippingReturns';
+import React, { useEffect } from 'react';
+import { io } from 'socket.io-client';
+
+const socket = io('http://localhost:8080');
 
 function App() {
+  useEffect(() => {
+    socket.on('connect', () => {
+      console.log('Connected to server with ID:', socket.id);
+    });
+
+    return () => {
+      socket.off('connect');
+    };
+  }, []);
 
   return(
     <BrowserRouter>
@@ -52,13 +65,13 @@ function App() {
 
   <Route path="/electronics" element={
     <ProtectedRoute>
-      <ElectronicProducts/>
+      <ElectronicProducts socket={socket}/>
     </ProtectedRoute>
   }/>
 
   <Route path="/staff" element={
     <ProtectedRoute>
-      <Staff/>
+      <Staff socket={socket}/>
     </ProtectedRoute>
   }/>
 

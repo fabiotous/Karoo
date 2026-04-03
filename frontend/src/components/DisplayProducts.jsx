@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 
-function DisplayProducts({ refreshTrigger }) {
+
+function DisplayProducts({ refreshTrigger, socket }) {
   const [products, setProducts] = useState([]);
   const [loadingAction, setLoadingAction] = useState({}); // pid → true/false
 
@@ -19,6 +20,23 @@ function DisplayProducts({ refreshTrigger }) {
   useEffect(() => {
     loadProducts();
   }, [refreshTrigger]); // Reload when refreshTrigger changes
+
+  useEffect(() => {
+    if (!socket) return; 
+
+    const handleNewProduct = (newProduct) => {
+      // setProducts((prevProducts) => [...prevProducts, newProduct]);
+      loadProducts();
+      window.alert('Product ' + newProduct.title + ' has been added');
+    };
+    socket.on('update_product_list', handleNewProduct);
+
+    return () => {
+      socket.off('update_product_list', handleNewProduct);
+    };
+  }, [socket]); 
+
+
 
   const toggleCart = async (pid, currentInCart) => {
     const newInCart = !currentInCart;

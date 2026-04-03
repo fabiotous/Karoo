@@ -2,7 +2,7 @@ import React from 'react'
 import DisplayProducts from '../components/DisplayProducts';
 import '../css/electronic-products.css';
 
-const ElectronicProducts = () => {
+const ElectronicProducts = ({socket}) => {
   return (
     <>
     <div className="content">
@@ -16,7 +16,7 @@ const ElectronicProducts = () => {
         a 1 year warrantly on all products. Browse our growing selection below!
       </p>
     </div>
-    <DisplayProducts></DisplayProducts>
+    <DisplayProducts socket={socket}></DisplayProducts>
     </>
   )
 }
