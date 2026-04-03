@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function UpdateProduct({ onProductUpdated }) {
+function UpdateProduct({ onProductUpdated, socket }) {
   const [pid, setpid] = useState('');
   const [price, setPrice] = useState('');
 
@@ -22,6 +22,7 @@ function UpdateProduct({ onProductUpdated }) {
       
       if (response.status === 200) {
         alert('product updated successfully!');
+        socket.emit('product_updated', pid);
         setpid('');
         setPrice('');
         if (onProductUpdated) onProductUpdated(); // Refresh the product list

@@ -77,7 +77,7 @@ function App() {
 
   <Route path="/cart" element={
     <ProtectedRoute>
-      <Cart/>
+      <Cart socket={socket}/>
     </ProtectedRoute>
   }/>
 </Routes>

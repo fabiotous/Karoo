@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function DeleteProduct({ onProductDeleted }) {
+function DeleteProduct({ onProductDeleted, socket }) {
   const [pid, setPid] = useState('');
 
   console.log(pid);
@@ -15,6 +15,7 @@ function DeleteProduct({ onProductDeleted }) {
       
       if (response.status === 204) {
         alert('product deleted successfully!');
+        socket.emit('product_deleted', pid);
         setPid('');
         if (onproductDeleted) onproductDeleted(); // Refresh the product list
       } else {

@@ -24,17 +24,38 @@ function DisplayProducts({ refreshTrigger, socket }) {
   useEffect(() => {
     if (!socket) return; 
 
+    // --- ADD LISTENER ---
     const handleNewProduct = (newProduct) => {
-      // setProducts((prevProducts) => [...prevProducts, newProduct]);
-      loadProducts();
+      setProducts((prev) => [...prev, newProduct]);
       window.alert('Product ' + newProduct.title + ' has been added');
     };
-    socket.on('update_product_list', handleNewProduct);
 
+    // --- UPDATE LISTENER ---
+    const handleUpdatedProduct = (updatedPid) => {
+      loadProducts();
+      window.alert('Product with ID ' + updatedPid + ' has been updated');
+    };
+
+    // --- DELETE LISTENER ---
+    const handleDeletedProduct = (deletedPid) => {
+      setProducts((prevProducts) => 
+        prevProducts.filter((p) => p.pid !== deletedPid)
+      );
+      window.alert('Product with ID ' + deletedPid + ' has been removed');
+    };
+
+    // Turn on the listeners
+    socket.on('update_product_list', handleNewProduct);
+    socket.on('refresh_single_product', handleUpdatedProduct);
+    socket.on('remove_product_from_list', handleDeletedProduct);
+
+    // Clean up when component unmounts
     return () => {
       socket.off('update_product_list', handleNewProduct);
+      socket.off('refresh_single_product', handleUpdatedProduct);
+      socket.off('remove_product_from_list', handleDeletedProduct);
     };
-  }, [socket]); 
+  }, [socket]);
 
 
 

@@ -39,21 +39,16 @@ io.on('connection', (socket) => {
 
 io.on('connection', (socket) => {
   
-    // Your existing add listener
     socket.on('new_product_added', (productData) => {
       socket.broadcast.emit('update_product_list', productData);
     });
   
-    // --- NEW: Delete Listener ---
     socket.on('product_deleted', (pid) => {
-      // Broadcast the PID so other clients know which one to remove
       socket.broadcast.emit('remove_product_from_list', pid);
     });
   
-    // --- NEW: Update Listener ---
-    socket.on('product_updated', (updatedProductData) => {
-      // Broadcast the updated data so other clients can replace the old one
-      socket.broadcast.emit('refresh_single_product', updatedProductData);
+    socket.on('product_updated', (pid) => {
+      socket.broadcast.emit('refresh_single_product', pid);
     });
   
   });
