@@ -5,6 +5,8 @@ const path = require('path');
 const { default: mongoose } = require('mongoose');
 const Product = require('./models/Product');
 const authRoutes = require("./routes/auth");
+const http = require('http');
+const { Server } = require('socket.io');
 
 const PORT = 8080;
 const DATABASE_HOST = 'localhost';
@@ -19,6 +21,42 @@ app.use(express.json());
 // === AUTH ROUTES ===
 app.use("/api/auth", authRoutes);
 
+const server = http.createServer(app);
+const io = new Server(server, {
+    cors: {
+      origin: "http://localhost:5173", 
+      methods: ["GET", "POST", "PATCH", "PUT", "DELETE"]
+    }
+  });
+
+io.on('connection', (socket) => {
+    console.log(`${socket.id} is connected`);
+  
+    socket.on('disconnect', () => {
+      console.log(`${socket.id} disconnected`);
+    });
+  });
+
+io.on('connection', (socket) => {
+  
+    // Your existing add listener
+    socket.on('new_product_added', (productData) => {
+      socket.broadcast.emit('update_product_list', productData);
+    });
+  
+    // --- NEW: Delete Listener ---
+    socket.on('product_deleted', (pid) => {
+      // Broadcast the PID so other clients know which one to remove
+      socket.broadcast.emit('remove_product_from_list', pid);
+    });
+  
+    // --- NEW: Update Listener ---
+    socket.on('product_updated', (updatedProductData) => {
+      // Broadcast the updated data so other clients can replace the old one
+      socket.broadcast.emit('refresh_single_product', updatedProductData);
+    });
+  
+  });
 //database connect
 const dbURL = `mongodb://${DATABASE_HOST}:${DATABASE_PORT}/product_library`;
 mongoose.connect(dbURL);
@@ -198,6 +236,6 @@ app.patch('/api/products/:pid/cart', express.json(), async (req, res) => {
     });
 
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Server is running on Port ${PORT}`);
 });
