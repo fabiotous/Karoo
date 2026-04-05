@@ -2,57 +2,67 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function DisplayCart({ refreshTrigger, socket }) {
-  const [products, setProducts] = useState([]);
+  const [userEmail, setUserEmail] = useState(() => localStorage.getItem("userEmail") || "");
+  const [cart, setCart] = useState([]); 
   const navigate = useNavigate();
 
-  const loadCart = async () => {
+  const loadCart = async (emailToFetch) => {
+    if (!emailToFetch) return; 
+    
     try {
-      const response = await fetch('/api/products');
-      const data = await response.json();
-      const inCartProducts = data.filter(product => product.inCart === true);
-      setProducts(inCartProducts);
+      const timestamp = new Date().getTime();
+      const response = await fetch(`/api/cart/${emailToFetch}?t=${timestamp}`);
+      if (!response.ok) throw new Error('Failed to fetch cart');
+      
+      const cartData = await response.json();
+      setCart(cartData); 
     } catch (error) {
-      console.error('Error loading products:', error);
+      console.error('Error loading cart:', error);
     }
   };
 
-  //without refreshTrigger, this would only load once on mount
-  //without the dependency array, this would load on every render (infinite loop) - BAD!
   useEffect(() => {
-    loadCart();
-  }, [refreshTrigger]); // Reload when refreshTrigger changes
+    if (userEmail) {
+      loadCart(userEmail);
+    }
+  }, [userEmail, refreshTrigger]);
 
   useEffect(() => {
     if (!socket) return; 
 
-    // --- UPDATE LISTENER ---
     const handleUpdatedProduct = (updatedPid) => {
-      loadCart();
+      loadCart(userEmail);
       window.alert('Product with ID ' + updatedPid + ' has been updated');
     };
 
-    // --- DELETE LISTENER ---
     const handleDeletedProduct = (deletedPid) => {
-      setProducts((prevProducts) => 
-        prevProducts.filter((p) => p.pid !== deletedPid)
+      setCart((prevCart) => 
+        prevCart.filter((cartItem) => {
+          const prod = cartItem.product;
+          const currentPid = prod._id || prod.pid;
+          return currentPid !== deletedPid;
+        })
       );
       window.alert('Product with ID ' + deletedPid + ' has been removed');
     };
 
-    // Turn on the listeners
     socket.on('refresh_single_product', handleUpdatedProduct);
     socket.on('remove_product_from_list', handleDeletedProduct);
 
-    // Clean up when component unmounts
     return () => {
       socket.off('refresh_single_product', handleUpdatedProduct);
       socket.off('remove_product_from_list', handleDeletedProduct);
     };
-  }, [socket]);
+  }, [socket, userEmail]);
 
-  const totalPrice = products.reduce((sum, product) => sum + product.price, 0);
+  const totalPrice = cart.reduce((sum, cartItem) => {
+    if (cartItem.product && cartItem.product.price) {
+        return sum + cartItem.product.price;
+    }
+    return sum;
+  }, 0);
 
-  if (products.length === 0) {
+  if (cart.length === 0) {
     return (
       <>
         <div>
@@ -64,10 +74,13 @@ function DisplayCart({ refreshTrigger, socket }) {
 
   return (
     <>
-        {products.map(product => {
+        {cart.map(cartItem => {
+          if (!cartItem.product) return null; 
+
+          const product = cartItem.product;
           const imageName = (product.hasImage ? product.name : 'PlaceholderProduct') + '.jpg';
           return (
-            <div key={product.pid} className="cart-item">
+            <div key={product.pid || product._id} className="cart-item">
                 <div className="product-image">
                     <img src={`/images/electronic_products/${imageName}`} alt={product.title} />
                 </div>
@@ -84,8 +97,6 @@ function DisplayCart({ refreshTrigger, socket }) {
                 <button className="checkout-btn" onClick={() => navigate('/underconstruction')}>Proceed to Checkout</button>
             </div>
         </div>
-        
-        
     </>
   );
 }

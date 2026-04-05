@@ -4,6 +4,21 @@ import { useState, useEffect } from 'react';
 function DisplayProducts({ refreshTrigger, socket }) {
   const [products, setProducts] = useState([]);
   const [loadingAction, setLoadingAction] = useState({}); // pid → true/false
+  const [userEmail, setUserEmail] = useState("");
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("userEmail");
+    if (storedEmail) {
+      setUserEmail(storedEmail);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (userEmail) {
+      loadCart(userEmail);
+    }
+  }, [userEmail]);
 
   const loadProducts = async () => {
     try {
@@ -12,6 +27,20 @@ function DisplayProducts({ refreshTrigger, socket }) {
       setProducts(data);
     } catch (error) {
       console.error('Error loading products:', error);
+    }
+  };
+
+  const loadCart = async (emailToFetch) => {
+    if (!emailToFetch) return; 
+    
+    try {
+      const response = await fetch(`/api/cart/${emailToFetch}`);
+      if (!response.ok) throw new Error('Failed to fetch cart');
+      
+      const cartData = await response.json();
+      setCart(cartData); 
+    } catch (error) {
+      console.error('Error loading cart:', error);
     }
   };
 
@@ -24,19 +53,16 @@ function DisplayProducts({ refreshTrigger, socket }) {
   useEffect(() => {
     if (!socket) return; 
 
-    // --- ADD LISTENER ---
     const handleNewProduct = (newProduct) => {
       setProducts((prev) => [...prev, newProduct]);
       window.alert('Product ' + newProduct.title + ' has been added');
     };
 
-    // --- UPDATE LISTENER ---
     const handleUpdatedProduct = (updatedPid) => {
       loadProducts();
       window.alert('Product with ID ' + updatedPid + ' has been updated');
     };
 
-    // --- DELETE LISTENER ---
     const handleDeletedProduct = (deletedPid) => {
       setProducts((prevProducts) => 
         prevProducts.filter((p) => p.pid !== deletedPid)
@@ -44,12 +70,10 @@ function DisplayProducts({ refreshTrigger, socket }) {
       window.alert('Product with ID ' + deletedPid + ' has been removed');
     };
 
-    // Turn on the listeners
     socket.on('update_product_list', handleNewProduct);
     socket.on('refresh_single_product', handleUpdatedProduct);
     socket.on('remove_product_from_list', handleDeletedProduct);
 
-    // Clean up when component unmounts
     return () => {
       socket.off('update_product_list', handleNewProduct);
       socket.off('refresh_single_product', handleUpdatedProduct);
@@ -57,23 +81,29 @@ function DisplayProducts({ refreshTrigger, socket }) {
     };
   }, [socket]);
 
+  const isProductInCart = (productId) => {
+    return cart.some(cartItem => {
+      const savedId = cartItem.product._id || cartItem.product;
+      
+      return String(savedId) === String(productId);
+    });
+  };
 
-
-  const toggleCart = async (pid, currentInCart) => {
-    const newInCart = !currentInCart;
+  const toggleCart = async (pid, currentlyInCart) => {
 
     setLoadingAction(prev => ({ ...prev, [pid]: true }));
 
     try {
-      const res = await fetch(`/api/products/${pid}/cart`, {
-        method: 'PATCH',
+      const endpoint = currentlyInCart ? '/api/cart/remove' : '/api/cart/add';
+      const res = await fetch(endpoint, {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ inCart: newInCart }),
+        body: JSON.stringify({ email: userEmail, productId: pid }),
       });
 
       if (!res.ok) throw new Error('Failed to update cart');
 
-      await loadProducts();
+      await loadCart(userEmail);
 
     } catch (err) {
       console.error(err);
@@ -98,12 +128,13 @@ function DisplayProducts({ refreshTrigger, socket }) {
       <div className="product-grid">
         {products.map(product => {
           const imageName = (product.hasImage ? product.name : 'PlaceholderProduct') + '.jpg';
+          const inCart = isProductInCart(product._id || product.pid);
           return (
             <div key={product.pid} className="product-card">
               <img src={`/images/electronic_products/${imageName}`} alt={product.title} />
               <h3>{product.title}</h3>
               <p>${product.price}</p>
-              {product.inCart ? (<button className="cart-btn" onClick={() => toggleCart(product.pid, true)}>Remove from Cart</button>) : (<button className="cart-btn" onClick={() => toggleCart(product.pid, false)}>Add to Cart</button>)}
+              {inCart ? (<button className="cart-btn" onClick={() => toggleCart(product._id || product.pid, true)}>Remove from Cart</button>) : (<button className="cart-btn" onClick={() => toggleCart(product._id || product.pid, false)}>Add to Cart</button>)}
             </div>
           );
         })}

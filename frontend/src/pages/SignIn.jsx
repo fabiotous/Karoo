@@ -15,6 +15,7 @@ const SignIn = () => {
         password,
       });
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("userEmail", email);
       alert("Login successful!");
       navigate("/home");
     } catch (err) {

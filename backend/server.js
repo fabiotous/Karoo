@@ -4,6 +4,7 @@ const app = express();
 const path = require('path');
 const { default: mongoose } = require('mongoose');
 const Product = require('./models/Product');
+const User = require('./models/User');
 const authRoutes = require("./routes/auth");
 const http = require('http');
 const { Server } = require('socket.io');
@@ -229,6 +230,65 @@ app.patch('/api/products/:pid/cart', express.json(), async (req, res) => {
       );
     res.json(product);
     });
+
+app.post('/api/cart/add', async (req, res) => {
+    try {
+        const { email, productId } = req.body; 
+
+        const user = await User.findOne({ email: email });
+
+        user.cart.push({ product: productId });
+
+        await user.save();
+        res.status(200).json(user.cart);
+
+    } catch (error) {
+        res.status(500).json({ message: "Server Error" });
+    }
+});
+
+app.post('/api/cart/remove', async (req, res) => {
+    try {
+        const { email, productId } = req.body;
+        if (!email) return res.status(400).json({ message: "Email required" });
+
+        const updatedUser = await User.findOneAndUpdate(
+            { email: email },
+            { $pull: { cart: { product: productId } } },
+            { return: 'after' } 
+        );
+
+        if (!updatedUser) return res.status(404).json({ message: "User not found" });
+
+        res.status(200).json({ message: "Removed successfully", cart: updatedUser.cart });
+
+    } catch (error) {
+        console.error("Error removing from cart:", error);
+        res.status(500).json({ message: "Server Error" });
+    }
+});
+
+app.get('/api/cart/:email', async (req, res) => {
+    try {
+        const email = req.params.email;
+        
+        if (!email) {
+            return res.status(400).json({ message: "Email is required to fetch cart." });
+        }
+
+        const user = await User.findOne({ email: email }).populate('cart.product');
+        
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        res.status(200).json(user.cart);
+
+    } catch (error) {
+        console.error("Error fetching cart:", error);
+        res.status(500).json({ message: "Server Error", error: error.message });
+    }
+});
 
 
 server.listen(PORT, () => {
