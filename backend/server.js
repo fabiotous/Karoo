@@ -268,14 +268,28 @@ app.post('/api/products', express.json(), (req,res) => {
 // DELETE HTTP method to delete a product
 // TO DO
 
-app.delete('/api/products/pid/:pid', async (req,res) => {
-    const prodId = req.params.pid;
-    const result = await Product.deleteOne({pid : prodId.toString()});
+app.delete('/api/products/pid/:pid', async (req, res) => {
+    try {
+        const prodId = req.params.pid;
 
-    if (result.deletedCount === 1) {
+        const productToDelete = await Product.findOne({ pid: prodId.toString() });
+
+        if (!productToDelete) {
+            return res.status(404).json({ error: "Product not found" });
+        }
+
+        await User.updateMany(
+            {}, 
+            { $pull: { cart: { product: productToDelete._id } } }
+        );
+
+        await Product.deleteOne({ _id: productToDelete._id });
+
         res.status(204).send();
-    } else {
-        res.status(404).json({error : "Product not found"});
+
+    } catch (error) {
+        console.error("Error deleting product:", error);
+        res.status(500).json({ error: "Server Error while deleting product" });
     }
 });
 

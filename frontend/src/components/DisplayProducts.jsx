@@ -54,7 +54,8 @@ function DisplayProducts({ refreshTrigger, socket, route }) {
     if (!socket) return; 
 
     const handleNewProduct = (newProduct) => {
-      setProducts((prev) => [...prev, newProduct]);
+      //setProducts((prev) => [...prev, newProduct]);
+      loadProducts();
       window.alert('Product ' + newProduct.title + ' has been added');
     };
 
@@ -64,9 +65,10 @@ function DisplayProducts({ refreshTrigger, socket, route }) {
     };
 
     const handleDeletedProduct = (deletedPid) => {
-      setProducts((prevProducts) => 
+      /* setProducts((prevProducts) => 
         prevProducts.filter((p) => p.pid !== deletedPid)
-      );
+      ); */
+      loadProducts();
       window.alert('Product with ID ' + deletedPid + ' has been removed');
     };
 

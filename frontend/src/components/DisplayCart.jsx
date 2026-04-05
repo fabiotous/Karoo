@@ -36,13 +36,14 @@ function DisplayCart({ refreshTrigger, socket }) {
     };
 
     const handleDeletedProduct = (deletedPid) => {
-      setCart((prevCart) => 
+      /* setCart((prevCart) => 
         prevCart.filter((cartItem) => {
           const prod = cartItem.product;
           const currentPid = prod._id || prod.pid;
           return currentPid !== deletedPid;
         })
-      );
+      ); */
+      loadCart(userEmail);
       window.alert('Product with ID ' + deletedPid + ' has been removed');
     };
 
