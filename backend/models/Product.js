@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
-const ProductSchema = new mongoose.Schema({
+const baseOptions = {
+    discriminatorKey: 'productType'
+};
+
+const Product = mongoose.model('product', new mongoose.Schema({
     pid: {
         type:       String,
         unique:     true,
@@ -24,12 +28,6 @@ const ProductSchema = new mongoose.Schema({
         required:   true,
         trim:       true
     },
-    category: {
-        type:       String,
-        unique:     false,
-        required:   true,
-        trim:       true
-    },
     price: {
         type:       Number,
         unique:     false,
@@ -46,7 +44,6 @@ const ProductSchema = new mongoose.Schema({
         required:   false,
         trim:       true
     }
-});
+}, baseOptions,));
 
-const Product = mongoose.model('product', ProductSchema);
 module.exports = Product;

@@ -4,6 +4,9 @@ const app = express();
 const path = require('path');
 const { default: mongoose } = require('mongoose');
 const Product = require('./models/Product');
+const Beauty = require('./models/Beauty');
+const Electronic = require('./models/Electronic');
+const Apparel = require('./models/Apparel');
 const User = require('./models/User');
 const authRoutes = require("./routes/auth");
 const http = require('http');
@@ -65,15 +68,17 @@ db.on('open', function() {
     console.log('database connected!');
 });
 
+db.dropDatabase();
+
 // List of products
 let product_library = [
-    { pid:1, hasImage:true, title:"Beats Studio Pro - Beats by Dr. Dre", name:"beats", category:"Electronics", price:349.99, stock:4, inCart:false, note:""},
-    { pid:2, hasImage:true, title:"14 Inch Mac Book Pro - Apple", name:"macbookpro", category:"Electronics", price:2099, stock:2, inCart:false, note:""},
-    { pid:3, hasImage:true, title:"Pink iPhone 13 - Apple", name:"iphone", category:"Electronics", price:649.99, stock:6, inCart:false, note:""},
-    { pid:4, hasImage:true, title:"BL Clip 4 - Portable Mini Bluetooth Speaker", name:"jbl", category:"Electronics", price:69.98, stock:12, inCart:false, note:""},
-    { pid:5, hasImage:true, title:"INIU Wireless Charger, 15W Qi", name:"charger", category:"Electronics", price:25.99, stock:23, inCart:false, note:""},
-    { pid:6, hasImage:true, title:"Airpods 4 - Apple", name:"airpods", category:"Electronics", price:149.99, stock:8, inCart:false, note:""},
-    { pid:7, hasImage:true, title:"Meta Quest 3S 128GB | VR Headset", name:"metaquest", category:"Electronics", price:349.99, stock:3, inCart:false, note:""}
+    { pid:1, hasImage:true, title:"Beats Studio Pro - Beats by Dr. Dre", name:"beats", price:349.99, stock:4, inCart:false, note:""},
+    { pid:2, hasImage:true, title:"14 Inch Mac Book Pro - Apple", name:"macbookpro",  price:2099, stock:2, inCart:false, note:""},
+    { pid:3, hasImage:true, title:"Pink iPhone 13 - Apple", name:"iphone", price:649.99, stock:6, inCart:false, note:""},
+    { pid:4, hasImage:true, title:"BL Clip 4 - Portable Mini Bluetooth Speaker", name:"jbl", price:69.98, stock:12, inCart:false, note:""},
+    { pid:5, hasImage:true, title:"INIU Wireless Charger, 15W Qi", name:"charger",  price:25.99, stock:23, inCart:false, note:""},
+    { pid:6, hasImage:true, title:"Airpods 4 - Apple", name:"airpods",  price:149.99, stock:8, inCart:false, note:""},
+    { pid:7, hasImage:true, title:"Meta Quest 3S 128GB | VR Headset", name:"metaquest",  price:349.99, stock:3, inCart:false, note:""}
 ];
 
 app.use('/', express.static(path.join(__dirname, '../frontend/public')));
@@ -103,18 +108,41 @@ app.get('/staff.html', (req,res) => {
     res.sendFile(path.join(__dirname, '/views/staff.html'));
 });
 
+let blib = [
+    { pid:8, hasImage:false, title:"purse", name:"purse", price:349.99, stock:4, brand:"lululemon", note:""},
+    { pid:9, hasImage:false, title:"lipstick", name:"lipstick",  price:2099, stock:2, brand:"shein" ,note:""}];
+
 /*************************************************/
 /********* Defining (CRUD) API routes ************/
 /*************************************************/
 
+async function addBeautyInit() {
+    const bcount = await Beauty.countDocuments();
+
+    if (bcount === 0) {
+        console.log('Adding test beauty products to db ...');
+
+        blib.forEach(product => {
+            const newProduct = new Beauty(product);
+            newProduct.save()
+                .then(() => console.log('Product added with Title' + product.title))
+                .catch(err => console.error('Error adding product with Title: ' + product.title + ' ' + err));
+        });
+    }
+    else {
+        console.log('Beauts already exist. Not adding test products.');
+        return;
+    }
+}
+
 async function addTestProductsToMongoDB() {
-    const productCount = await Product.countDocuments();
+    const productCount = await Electronic.countDocuments();
 
     if (productCount === 0) {
-        console.log('Adding test products to db ...');
+        console.log('Adding test electronics to db ...');
 
         product_library.forEach(product => {
-            const newProduct = new Product(product);
+            const newProduct = new Electronic(product);
             newProduct.save()
                 .then(() => console.log('Product added with Title' + product.title))
                 .catch(err => console.error('Error adding product with Title: ' + product.title + ' ' + err));
@@ -125,7 +153,9 @@ async function addTestProductsToMongoDB() {
         return;
     }
 }
+
 addTestProductsToMongoDB();
+addBeautyInit();
 
 //GET HTTP method to get all products
 async function getAllProductsfromMongoDB() {
@@ -141,6 +171,35 @@ async function getAllProductsfromMongoDB() {
 }
 getAllProductsfromMongoDB();
 
+app.get('/api/beauty', async (req, res) => {
+    try {
+            const products = await Beauty.find({});           
+            console.log("Products found:", products.length);
+            res.json(products); 
+        } catch (err) {
+            console.error(err);
+        }
+});
+
+app.get('/api/apparel', async (req, res) => {
+    try {
+            const products = await Apparel.find({});           
+            console.log("Products found:", products.length);
+            res.json(products); 
+        } catch (err) {
+            console.error(err);
+        }
+});
+
+app.get('/api/electronic', async (req, res) => {
+    try {
+            const products = await Electronic.find({});           
+            console.log("Products found:", products.length);
+            res.json(products); 
+        } catch (err) {
+            console.error(err);
+        }
+});
 
 //GET HTTP except for PID 
 

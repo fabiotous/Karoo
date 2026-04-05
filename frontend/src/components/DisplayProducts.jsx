@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 
-function DisplayProducts({ refreshTrigger, socket }) {
+function DisplayProducts({ refreshTrigger, socket, route }) {
   const [products, setProducts] = useState([]);
   const [loadingAction, setLoadingAction] = useState({}); // pid → true/false
   const [userEmail, setUserEmail] = useState("");
@@ -22,7 +22,7 @@ function DisplayProducts({ refreshTrigger, socket }) {
 
   const loadProducts = async () => {
     try {
-      const response = await fetch('/api/products');
+      const response = await fetch(`/api/${route}`);
       const data = await response.json();
       setProducts(data);
     } catch (error) {

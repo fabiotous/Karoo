@@ -16,7 +16,7 @@ const ElectronicProducts = ({socket}) => {
         a 1 year warrantly on all products. Browse our growing selection below!
       </p>
     </div>
-    <DisplayProducts socket={socket}></DisplayProducts>
+    <DisplayProducts socket={socket} route={"electronic"}></DisplayProducts>
     </>
   )
 }
