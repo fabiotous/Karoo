@@ -70,7 +70,7 @@ db.on('open', function() {
 
 db.dropDatabase();
 
-// List of products
+// List of test products (electronic)
 let product_library = [
     { pid:1, hasImage:true, title:"Beats Studio Pro - Beats by Dr. Dre", name:"beats", price:349.99, stock:4, inCart:false, note:""},
     { pid:2, hasImage:true, title:"14 Inch Mac Book Pro - Apple", name:"macbookpro",  price:2099, stock:2, inCart:false, note:""},
@@ -79,6 +79,20 @@ let product_library = [
     { pid:5, hasImage:true, title:"INIU Wireless Charger, 15W Qi", name:"charger",  price:25.99, stock:23, inCart:false, note:""},
     { pid:6, hasImage:true, title:"Airpods 4 - Apple", name:"airpods",  price:149.99, stock:8, inCart:false, note:""},
     { pid:7, hasImage:true, title:"Meta Quest 3S 128GB | VR Headset", name:"metaquest",  price:349.99, stock:3, inCart:false, note:""}
+];
+
+// List of test products (beauty)
+let blib = [
+    { pid:9, hasImage:true, title:"MAC Lipstick", name:"lipstick",  price:34.99, stock:2, brand:"mac" ,note:""},
+    { pid:11, hasImage:true, title:"Hair Brush", name:"brush",  price:15.99, stock:2, brand:"noname" ,note:""},
+    { pid:12, hasImage:true, title:"Hairspray", name:"spray",  price:7.55, stock:2, brand:"pantene" ,note:""},
+];
+
+// List of test products (apparel)
+let apparel_library = [
+    { pid:10, hasImage:true, title:"Coach Purse", name:"purse", price:349.99, stock:4, brand:"coach", note:""},
+    { pid:13, hasImage:true, title:"Gildan Hoddie", name:"hoodie", price:34.60, stock:4, brand:"gildan", note:""},
+    { pid:14, hasImage:true, title:"White tee", name:"tee", price:7.99, stock:4, brand:"gildan", note:""},
 ];
 
 app.use('/', express.static(path.join(__dirname, '../frontend/public')));
@@ -108,9 +122,6 @@ app.get('/staff.html', (req,res) => {
     res.sendFile(path.join(__dirname, '/views/staff.html'));
 });
 
-let blib = [
-    { pid:8, hasImage:false, title:"purse", name:"purse", price:349.99, stock:4, brand:"lululemon", note:""},
-    { pid:9, hasImage:false, title:"lipstick", name:"lipstick",  price:2099, stock:2, brand:"shein" ,note:""}];
 
 /*************************************************/
 /********* Defining (CRUD) API routes ************/
@@ -135,6 +146,27 @@ async function addBeautyInit() {
     }
 }
 
+async function addApparelInit() {
+    const acount = await Apparel.countDocuments();
+
+    if (acount === 0) {
+        console.log('Adding test apparel products to db ...');
+
+        apparel_library.forEach(product => {
+            const newProduct = new Apparel(product);
+            newProduct.save()
+                .then(() => console.log('Product added with Title' + product.title))
+                .catch(err => console.error('Error adding product with Title: ' + product.title + ' ' + err));
+        });
+    }
+    else {
+        console.log('Apprel products already exist. Not adding test products.');
+        return;
+    }
+}
+
+
+// electronic products
 async function addTestProductsToMongoDB() {
     const productCount = await Electronic.countDocuments();
 
@@ -156,6 +188,7 @@ async function addTestProductsToMongoDB() {
 
 addTestProductsToMongoDB();
 addBeautyInit();
+addApparelInit();
 
 //GET HTTP method to get all products
 async function getAllProductsfromMongoDB() {

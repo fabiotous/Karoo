@@ -7,7 +7,7 @@ const ElectronicProducts = ({socket}) => {
     <>
     <div className="content">
       <div className="banner">
-          <img src="/images/electronic_products/elec-banner.jpg" alt="banner"/>
+          <img src="/images/electronics/elec-banner.jpg" alt="banner"/>
       </div>
 
       <p className="description">

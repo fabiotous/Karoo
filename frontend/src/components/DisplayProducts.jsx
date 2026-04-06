@@ -133,7 +133,7 @@ function DisplayProducts({ refreshTrigger, socket, route }) {
           const inCart = isProductInCart(product._id || product.pid);
           return (
             <div key={product.pid} className="product-card">
-              <img src={`/images/electronic_products/${imageName}`} alt={product.title} />
+              <img src={`/images/product_images/${imageName}`} alt={product.title} />
               <h3>{product.title}</h3>
               <p>${product.price}</p>
               {inCart ? (<button className="cart-btn" onClick={() => toggleCart(product._id || product.pid, true)}>Remove from Cart</button>) : (<button className="cart-btn" onClick={() => toggleCart(product._id || product.pid, false)}>Add to Cart</button>)}
