@@ -51,10 +51,10 @@ const Headers = () => {
         <tr>
             <td onClick={() => navigate('/home')}>Home</td>
             <td onClick={() => navigate('/about')}>About</td>
-            <td onClick={() => navigate('/underconstruction')}>Best Sellers</td>
+            <td onClick={() => navigate('/best-sellers')}>Best Sellers</td>
             <td onClick={() => navigate('/electronics')}>Electronics</td>
-            <td onClick={() => navigate('/underconstruction')}>Beauty</td>
-            <td onClick={() => navigate('/underconstruction')}>Apparel</td>
+            <td onClick={() => navigate('/beauty')}>Beauty</td>
+            <td onClick={() => navigate('/apparel')}>Apparel</td>
 
         </tr>
         </tbody>

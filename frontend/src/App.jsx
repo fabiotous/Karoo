@@ -5,6 +5,9 @@ import HomePage from './pages/HomePage';
 import About from './pages/About';
 import UnderConstruction from './pages/UnderConstruction';
 import ElectronicProducts from './pages/ElectronicProducts';
+import Beauty from './pages/Beauty';
+import Apparel from './pages/Apparel';
+import BestSellers from './pages/BestSellers';
 import Staff from './pages/Staff';
 import Cart from './pages/Cart';
 import Headers from './components/Headers';
@@ -68,6 +71,24 @@ function App() {
       <ElectronicProducts socket={socket}/>
     </ProtectedRoute>
   }/>
+  
+  <Route path="/beauty" element={
+    <ProtectedRoute>
+      <Beauty socket={socket}/>
+    </ProtectedRoute>
+  }/>
+
+  <Route path="/apparel" element={
+    <ProtectedRoute>
+      <Apparel socket={socket}/>
+    </ProtectedRoute>
+  }/>
+
+  <Route path="/best-sellers" element={
+    <ProtectedRoute>
+      <BestSellers socket={socket}/>
+    </ProtectedRoute>
+  }/>  
 
   <Route path="/staff" element={
     <ProtectedRoute>

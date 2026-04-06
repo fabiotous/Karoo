@@ -17,8 +17,8 @@ const ElectronicProducts = ({socket}) => {
       </p>
     </div>
     <DisplayProducts socket={socket} route={"electronic"}></DisplayProducts>
-    </>
-  )
-}
+    </> 
+  ) 
+} 
 
 export default ElectronicProducts
