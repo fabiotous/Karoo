@@ -83,7 +83,7 @@ function DisplayCart({ refreshTrigger, socket }) {
           return (
             <div key={product.pid || product._id} className="cart-item">
                 <div className="product-image">
-                    <img src={`/images/electronic_products/${imageName}`} alt={product.title} />
+                    <img src={`/images/product_images/${imageName}`} alt={product.title} />
                 </div>
                 <div className="product-info"><h3 className="product-title">{product.title}</h3></div>
                 <div className="product-price">
