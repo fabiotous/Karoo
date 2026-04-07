@@ -234,6 +234,18 @@ app.get('/api/products/electronic', async (req, res) => {
         }
 });
 
+app.get('/api/products/random', async (req, res) => {
+    try {
+        const products = await Product.aggregate([
+            {$sample: { size: 6 }}
+        ])   ;
+        console.log("Products found:", products.length);
+        res.json(products); 
+    } catch {
+        console.error(err);
+    }
+})
+
 //GET HTTP except for PID 
 
 app.get('/api/products/search', async (req, res) => {
@@ -301,7 +313,7 @@ app.post('/api/products', express.json(), (req,res) => {
 
 app.post('/api/products/electronic', express.json(), (req,res) => {
     const newProd = req.body;
-    if (newProd.pid && newProd.title && newProd.name  && newProd.price && newProd.stock && newProd.note && newProd.brand) {
+    if (newProd.pid && newProd.title && newProd.name  && newProd.price && newProd.stock && newProd.note && newProd.manufacturer) {
         if (!newProd.hasImage) {
             newProd.hasImage = false; 
         }

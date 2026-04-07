@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 
 function NewProduct({ onProductAdded, socket }) {
 
-  const [selectedForm, setFormVal] = useState("");
+  const [selectedForm, setFormVal] = useState("Default");
 
   const formChange = async (e) => {
     const category = e.target.value;
@@ -23,7 +23,9 @@ function NewProduct({ onProductAdded, socket }) {
     price: '',
     stock: '',
     note: '',
-    brand: ''
+    brand: '',
+    manufacturer: '',
+    category: 'Default'
   });
 
   const handleSubmit = async (e) => {
@@ -42,7 +44,8 @@ function NewProduct({ onProductAdded, socket }) {
       price: parseInt(formData.price),
       stock: parseInt(formData.stock),
       brand: formData.brand,
-      note: formData.note
+      note: formData.note,
+      manufacturer: formData.manufacturer
     };
 
     let endpoint = "/api/products";
@@ -66,7 +69,8 @@ function NewProduct({ onProductAdded, socket }) {
       if (response.status === 201) {
         alert('Product added successfully!');
         socket.emit('new_product_added', newProduct);
-        setFormData({ pid: '', title: '', name: '', category: '', price: '' , stock: '', note: '', brand:''}); // Reset form
+        setFormData({ pid: '', title: '', name: '', category: 'Default', price: '' , stock: '', note: '', brand:'', manufacturer:''}); // Reset form
+        setFormVal("Default");
         if (onProductAdded) onProductAdded(); // Refresh the product list
       } else {
         alert('Error: ' + result.error);
@@ -89,13 +93,12 @@ function NewProduct({ onProductAdded, socket }) {
       <div id="new-form">
         <h2>Choose a product category</h2>
         <select value={selectedForm} onChange={formChange}>
-          <option value="">Select an option</option>
+          <option value="Default">Select an option</option>
           <option value="Electronics">Electronics</option>
           <option value="Beauty">Beauty</option>
           <option value="Apparel">Apparel</option>
         </select>
-        {(selectedForm === "Electronics" || selectedForm === "Beauty" || selectedForm === "Apparel") && (
-            <form onSubmit={handleSubmit}>
+        {(selectedForm !== "Default") && (<form onSubmit={handleSubmit}>
           <input 
             type="number" 
             name="pid" 
@@ -143,19 +146,26 @@ function NewProduct({ onProductAdded, socket }) {
             value={formData.note}
             onChange={handleChange} 
           />
-          <input 
+          {(selectedForm === "Beauty" || selectedForm === "Apparel") && (
+            <input 
             type="text" 
             name="brand" 
             placeholder="Brand" 
             value={formData.brand}
             onChange={handleChange}
           />
+          )}
+          {(selectedForm === "Electronics") && (
+            <input 
+            type="text" 
+            name="manufacturer" 
+            placeholder="Manufacturer" 
+            value={formData.manufacturer}
+            onChange={handleChange}
+          />
+          )}
           <button type="submit">Add Product</button>
-          </form>
-        )}
-          
-
-        
+          </form>)}
       </div>
     </>
   );
