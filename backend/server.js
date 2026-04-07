@@ -68,7 +68,7 @@ db.on('open', function() {
     console.log('database connected!');
 });
 
-db.dropDatabase();
+//db.dropDatabase();
 
 // List of test products (electronic)
 let product_library = [
@@ -204,7 +204,7 @@ async function getAllProductsfromMongoDB() {
 }
 getAllProductsfromMongoDB();
 
-app.get('/api/beauty', async (req, res) => {
+app.get('/api/products/beauty', async (req, res) => {
     try {
             const products = await Beauty.find({});           
             console.log("Products found:", products.length);
@@ -214,7 +214,7 @@ app.get('/api/beauty', async (req, res) => {
         }
 });
 
-app.get('/api/apparel', async (req, res) => {
+app.get('/api/products/apparel', async (req, res) => {
     try {
             const products = await Apparel.find({});           
             console.log("Products found:", products.length);
@@ -224,7 +224,7 @@ app.get('/api/apparel', async (req, res) => {
         }
 });
 
-app.get('/api/electronic', async (req, res) => {
+app.get('/api/products/electronic', async (req, res) => {
     try {
             const products = await Electronic.find({});           
             console.log("Products found:", products.length);
@@ -252,7 +252,7 @@ app.get('/api/products/search', async (req, res) => {
     }
 });
 
-app.get('/api/products:pid', async (req, res) => {
+app.get('/api/products/:pid', async (req, res) => {
     const pid = parseInt(req.params.pid);
     const product = await Product.findOne({pid : pid.toString()});
 
@@ -276,10 +276,11 @@ app.get('/api/products:pid', async (req, res) => {
 
 // POST HTTP method to add a new product
 // TO DO
+
+//<DisplayProducts socket={socket} route={"best-sellers"}></DisplayProducts> add this later
 app.post('/api/products', express.json(), (req,res) => {
     const newProd = req.body;
-
-    if (newProd && newProd.title && newProd.name && newProd.category && newProd.price && newProd.stock && newProd.note) {
+    if (newProd.pid && newProd.title && newProd.name && newProd.category && newProd.price && newProd.stock && newProd.note) {
         if (!newProd.hasImage) {
             newProd.hasImage = false; 
         }
@@ -287,6 +288,69 @@ app.post('/api/products', express.json(), (req,res) => {
             newProd.inCart = false;
         }
         const nuProd = new Product(newProd);
+        nuProd.save()
+            .then(() => console.log('Product added ' + nuProd.pid))
+            .catch(err => console.error('error on' + nuProd.pid));
+
+        res.status(201).json(newProd);
+    } else {
+        res.status(400).json({ error: "Invalid Product data" });
+    }
+}
+);
+
+app.post('/api/products/electronic', express.json(), (req,res) => {
+    const newProd = req.body;
+    if (newProd.pid && newProd.title && newProd.name  && newProd.price && newProd.stock && newProd.note && newProd.brand) {
+        if (!newProd.hasImage) {
+            newProd.hasImage = false; 
+        }
+        if (!newProd.inCart) {
+            newProd.inCart = false;
+        }
+        const nuProd = new Electronic(newProd);
+        nuProd.save()
+            .then(() => console.log('Product added ' + nuProd.pid))
+            .catch(err => console.error('error on' + nuProd.pid));
+
+        res.status(201).json(newProd);
+    } else {
+        res.status(400).json({ error: "Invalid Product data" });
+    }
+}
+);
+
+app.post('/api/products/apparel', express.json(), (req,res) => {
+    const newProd = req.body;
+    if (newProd.pid && newProd.title && newProd.name  && newProd.price && newProd.stock && newProd.brand) {
+        if (!newProd.hasImage) {
+            newProd.hasImage = false; 
+        }
+        if (!newProd.inCart) {
+            newProd.inCart = false;
+        }
+        const nuProd = new Apparel(newProd);
+        nuProd.save()
+            .then(() => console.log('Product added ' + nuProd.pid))
+            .catch(err => console.error('error on' + nuProd.pid));
+
+        res.status(201).json(newProd);
+    } else {
+        res.status(400).json({ error: "Invalid Product data" });
+    }
+}
+);
+
+app.post('/api/products/beauty', express.json(), (req,res) => {
+    const newProd = req.body;
+    if (newProd.pid && newProd.title && newProd.name  && newProd.price && newProd.stock && newProd.brand) {
+        if (!newProd.hasImage) {
+            newProd.hasImage = false; 
+        }
+        if (!newProd.inCart) {
+            newProd.inCart = false;
+        }
+        const nuProd = new Beauty(newProd);
         nuProd.save()
             .then(() => console.log('Product added ' + nuProd.pid))
             .catch(err => console.error('error on' + nuProd.pid));
