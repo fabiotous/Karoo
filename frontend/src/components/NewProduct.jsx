@@ -3,18 +3,36 @@ import React, { useEffect } from 'react';
 
 
 function NewProduct({ onProductAdded, socket }) {
+
+  const [selectedForm, setFormVal] = useState("");
+
+  const formChange = async (e) => {
+    const category = e.target.value;
+
+    setFormVal(category);
+
+    setFormData({
+    ...formData,
+    category: category});
+  };
+   
   const [formData, setFormData] = useState({
     pid: '',
     title: '',
     name: '',
-    category: '',
     price: '',
     stock: '',
-    note: ''
+    note: '',
+    brand: ''
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!formData.category) {
+  alert("Please select a category");
+  return;
+}
     
     const newProduct = {
       pid: formData.pid,
@@ -23,11 +41,22 @@ function NewProduct({ onProductAdded, socket }) {
       category: formData.category,
       price: parseInt(formData.price),
       stock: parseInt(formData.stock),
+      brand: formData.brand,
       note: formData.note
     };
 
+    let endpoint = "/api/products";
+
+  if (formData.category === "Electronics") {
+      endpoint = "/api/products/electronic";
+  } else if (formData.category === "Beauty") {
+      endpoint = "/api/products/beauty";
+  } else if (formData.category === "Apparel") {
+      endpoint = "/api/products/apparel";
+  }
+
     try {
-      const response = await fetch('/api/products', {
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newProduct)
@@ -37,7 +66,7 @@ function NewProduct({ onProductAdded, socket }) {
       if (response.status === 201) {
         alert('Product added successfully!');
         socket.emit('new_product_added', newProduct);
-        setFormData({ pid: '', title: '', name: '', category: '', price: '' , stock: '', note: ''}); // Reset form
+        setFormData({ pid: '', title: '', name: '', category: '', price: '' , stock: '', note: '', brand:''}); // Reset form
         if (onProductAdded) onProductAdded(); // Refresh the product list
       } else {
         alert('Error: ' + result.error);
@@ -53,12 +82,20 @@ function NewProduct({ onProductAdded, socket }) {
       [e.target.name]: e.target.value
     });
   };
+ 
 
   return (
     <>
       <div id="new-form">
-        <h2>Add New Product</h2>
-        <form onSubmit={handleSubmit}>
+        <h2>Choose a product category</h2>
+        <select value={selectedForm} onChange={formChange}>
+          <option value="">Select an option</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Beauty">Beauty</option>
+          <option value="Apparel">Apparel</option>
+        </select>
+        {(selectedForm === "Electronics" || selectedForm === "Beauty" || selectedForm === "Apparel") && (
+            <form onSubmit={handleSubmit}>
           <input 
             type="number" 
             name="pid" 
@@ -80,14 +117,6 @@ function NewProduct({ onProductAdded, socket }) {
             name="name" 
             placeholder="Name" 
             value={formData.name}
-            onChange={handleChange}
-            required 
-          />
-          <input 
-            type="text" 
-            name="category" 
-            placeholder="Category" 
-            value={formData.category}
             onChange={handleChange}
             required 
           />
@@ -114,8 +143,19 @@ function NewProduct({ onProductAdded, socket }) {
             value={formData.note}
             onChange={handleChange} 
           />
+          <input 
+            type="text" 
+            name="brand" 
+            placeholder="Brand" 
+            value={formData.brand}
+            onChange={handleChange}
+          />
           <button type="submit">Add Product</button>
-        </form>
+          </form>
+        )}
+          
+
+        
       </div>
     </>
   );

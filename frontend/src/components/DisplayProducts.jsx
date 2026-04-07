@@ -22,7 +22,7 @@ function DisplayProducts({ refreshTrigger, socket, route }) {
 
   const loadProducts = async () => {
     try {
-      const response = await fetch(`/api/${route}`);
+      const response = await fetch(`/api/products/${route}`);
       const data = await response.json();
       setProducts(data);
     } catch (error) {

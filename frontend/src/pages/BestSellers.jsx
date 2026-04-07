@@ -15,7 +15,7 @@ const BestSellers = ({socket}) => {
         Give these products a try and you won't be disappointed. 
       </p>
     </div>
-    <DisplayProducts socket={socket} route={"best-sellers"}></DisplayProducts>
+    
     </>
   )
 }
