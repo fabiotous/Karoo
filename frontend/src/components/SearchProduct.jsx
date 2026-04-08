@@ -71,7 +71,7 @@ function SearchProduct() {
                   const imageName = (Product.hasImage ? Product.name : 'PlaceholderProduct') + '.jpg';
                   return (
                     <div key={Product.pid}>
-                      <img src={`/images/electronic_products/${imageName}`} height="100" alt={Product.title} />
+                      <img src={`/images/product_images/${imageName}`} height="100" alt={Product.title} />
                       <p>
                         PID: {Product.pid}, name: {Product.title}, 
                         price: {Product.price}, stock: {Product.stock}
