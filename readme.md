@@ -42,15 +42,22 @@ npm install react-router-dom
 4. Start the application:
 Backend: `npm run start`
 Frontend: `npm run dev`
-5. Open your browser and go to: http://localhost:3000
+5. Open your browser and go to: http://localhost:5173
 
 ## Routes & API:
 
 ### Frontend Routes
 - `/` or `/home` → Home Page
 - `/about` → About Page
-- `/electronics` → Products Page
+- `/electronics` → Electronic Products Page
+- `/beauty` → Beauty Products Page
+- `/apparel` → Apparel Products Page
+- `/best-seller` → Best Sellers Products Page
 - `/cart` → Cart Page
+- `/faq` → Frequently Asked Questions Page
+- `/privacy` → Privacy Policy Page
+- `/terms` → Terms and Conditions Page
+- `/shipping` → Shipping and Returns Page
 - `/staff` → Staff/Admin Page
 - `/underconstruction` → Future Features
 
@@ -58,12 +65,23 @@ Frontend: `npm run dev`
 
 | Method | Endpoint                          | Description                             | Status Codes                        |
 | ------ | --------------------------------- | --------------------------------------- | ----------------------------------- |
-| GET    | /api/products                     | Retrieve the list of available products | 200 OK                              |
-| GET    | /api/products/search?title=:input | Retrieve a specific product by name     | 200 OK, 404 Not Found, 400 No Input |
+| GET    | /api/products                     | Retrieve the list of available products | 200 OK, 404 Not Found               |
+| GET    | /api/products/beauty              | Retrieve the list of beauty products    | 200 OK, 404 Not Found               |
+| GET    | /api/products/apparel             | Retrieve the list of apparel products   | 200 OK, 404 Not Found               |
+| GET    | /api/products/electronics         | Retrieve the list of electronic products| 200 OK, 404 Not Found               |
+| GET    | /api/products/random              | Retrieve the list of random products    | 200 OK, 404 Not Found               |
+| GET    | /api/products/search              | Retrieve a specific product by name     | 200 OK, 404 Not Found, 400 No Input |
+| GET    | /api/products/:pid                | Retrieve a specific product by PID      | 200 OK, 404 Not Found               |
+| GET    | /api/cart/:email                  | Retrieve a specific cart by user email  | 200 OK, 500 Server Error            |
 | POST   | /api/products                     | Add a new product to the list           | 201 Created, 400 Bad Request        |
-| PATCH  | /api/products/pid/:pid            | Updates a product's price               | 200 OK                              |
-| PATCH  | /api/products/:pid/cart           | Updates a product's in cart status      | 200 OK, 400 Bad Request             |
-| DELETE | /api/products/pid/:pid            | Delete a product using its unique ID    | 200 OK, 404 Not Found               |
+| POST   | /api/products/electronic          | Add a new electronic product to the list| 201 Created, 400 Bad Request        |
+| POST   | /api/products/apparel             | Add a new apparel product to the list   | 201 Created, 400 Bad Request        |
+| POST   | /api/products/beauty              | Add a new beauty product to the list    | 201 Created, 400 Bad Request        |
+| POST   | /api/cart/add                     | Add a product to a user's cart          | 200 OK, 500 Server Error            |
+| POST   | /api/cart/remove                  | Remove a product from a user's cart     | 200 OK, 500 Server Error            |
+| PATCH  | /api/products/pid/:pid            | Update a product's price                | 200 OK                              |
+| PATCH  | /api/products/:pid/cart           | Update a product's in cart status       | 200 OK, 500 Server Error            |
+| DELETE | /api/products/pid/:pid            | Delete a product using its unique ID    | 204 OK, 500 Server Error            |
 
 These endpoints enable communication between the client-side pages and the server, demonstrating proper use of HTTP methods and RESTful design principles.
 
