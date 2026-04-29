@@ -1,15 +1,8 @@
-# CPS630 ASSIGNMENT 3 - Karoo (E-Commerce Web Application)
-
-## Names
-
-1. Humaira Adeeb | 501030823
-2. Mykhaylo Batashov | 501092777
-3. Fabio Tous | 501111871
-4. Chloe Chartrand | 500946522
+# Karoo - An E-Commerce Web Application
 
 ## Overview
 
-Karoo is a full-stack e-commerce web application developed using the MERN stack (MongoDB, Express, React, Node.js). This final iteration builds upon previous versions by integrating a complete client-server architecture, persistent database storage, user authentication, and real-time communication.
+Karoo is a full-stack e-commerce web application mirroring Amazon app's outlook and features, developed using the MERN stack (MongoDB, Express, React, Node.js). This final iteration builds upon previous versions by integrating a complete client-server architecture, persistent database storage, user authentication, and real-time communication.
 
 The application allows users to browse products, search items, manage a shopping cart, and interact with a dynamic and responsive user interface. Each user has their own account and personalized data, enabled through authentication and database integration.
 
