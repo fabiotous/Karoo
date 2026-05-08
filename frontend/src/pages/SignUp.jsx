@@ -10,7 +10,7 @@ const Signup = () => {
 
   const handleSignup = async () => {
     try {
-      const res = await axios.post("http://localhost:8080/api/auth/signup", {
+      const res = await axios.post("https://karoo-production.up.railway.app/api/auth/signup" || "http://localhost:8080/api/auth/signup", {
         email,
         password,
       });
