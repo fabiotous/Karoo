@@ -1,9 +1,10 @@
 // createUser.js
+require('dotenv').config();
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const User = require("./models/User"); // Make sure your User model exists
 
-mongoose.connect("mongodb://localhost:27017/product_library")
+mongoose.connect(process.env.MONG_URI || "mongodb://localhost:2701/product_library")
   .then(async () => {
     console.log("DB connected!");
 
