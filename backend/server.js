@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors      = require('cors');
 const app = express();
@@ -58,7 +59,8 @@ io.on('connection', (socket) => {
   });
 //database connect
 const dbURL = `mongodb://${DATABASE_HOST}:${DATABASE_PORT}/product_library`;
-mongoose.connect(dbURL);
+
+mongoose.connect(process.env.MONG_URI || dbURL);
 
 const db = mongoose.connection;
 db.on('error', function(e) {
