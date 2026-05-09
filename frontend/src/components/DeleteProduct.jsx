@@ -9,7 +9,7 @@ function DeleteProduct({ onProductDeleted, socket }) {
     e.preventDefault();
     
     try {
-      const response = await fetch(`/api/products/pid/${pid}`, {
+      const response = await fetch(`https://karoo-production.up.railway.app/api/products/pid/${pid}` || `/api/products/pid/${pid}`, {
         method: 'DELETE'
       });
       

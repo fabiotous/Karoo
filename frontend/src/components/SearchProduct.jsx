@@ -23,7 +23,7 @@ function SearchProduct() {
       //let's make the fetch call to our backend API
       //we use url encoding to handle special characters in name names
       //we must encode as we can't have characters like spaces in the URLs and the node/express backend will decode
-      const response = await fetch(`/api/products/search?title=${encodeURIComponent(title)}`);
+      const response = await fetch(`https://karoo-production.up.railway.app/api/products/search?title=${encodeURIComponent(title)}` || `/api/products/search?title=${encodeURIComponent(title)}`);
       const result = await response.json();
       
       //if the response is successful, we update our Products state with the results and set searched to true to show results

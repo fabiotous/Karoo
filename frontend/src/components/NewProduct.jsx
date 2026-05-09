@@ -51,11 +51,11 @@ function NewProduct({ onProductAdded, socket }) {
     let endpoint = "/api/products";
 
   if (formData.category === "Electronics") {
-      endpoint = "/api/products/electronic";
+      endpoint = "https://karoo-production.up.railway.app/api/products/electronic" || "/api/products/electronic";
   } else if (formData.category === "Beauty") {
-      endpoint = "/api/products/beauty";
+      endpoint = "https://karoo-production.up.railway.app/api/products/beauty" || "/api/products/beauty";
   } else if (formData.category === "Apparel") {
-      endpoint = "/api/products/apparel";
+      endpoint = "https://karoo-production.up.railway.app/api/products/apparel" || "/api/products/apparel";
   }
 
     try {

@@ -13,7 +13,7 @@ function UpdateProduct({ onProductUpdated, socket }) {
     }
 
     try {
-      const response = await fetch(`/api/products/pid/${pid}`, {
+      const response = await fetch(`https://karoo-production.up.railway.app/api/products/pid/${pid}` || `/api/products/pid/${pid}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedproduct)
