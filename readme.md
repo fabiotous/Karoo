@@ -1,5 +1,7 @@
 # Karoo - An E-Commerce Web Application
 
+Live Project Link -> https://karoo-production-1602.up.railway.app
+
 ## Overview
 
 Karoo is a full-stack e-commerce web application mirroring Amazon app's outlook and features, developed using the MERN stack (MongoDB, Express, React, Node.js). This final iteration builds upon previous versions by integrating a complete client-server architecture, persistent database storage, user authentication, and real-time communication.
