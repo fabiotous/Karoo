@@ -29,7 +29,10 @@ app.use("/api/auth", authRoutes);
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-      origin: "http://localhost:5173", 
+        origin: [
+            "http://localhost:5173", 
+            "https://karoo-production-1602.up.railway.app"
+          ],
       methods: ["GET", "POST", "PATCH", "PUT", "DELETE"]
     }
   });
