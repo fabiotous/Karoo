@@ -22,7 +22,7 @@ function DisplayProducts({ refreshTrigger, socket, route }) {
 
   const loadProducts = async () => {
     try {
-      const response = await fetch(`/api/products/${route}`);
+      const response = await fetch(`https://karoo-production.up.railway.app/api/products/${route}` || `/api/products/${route}`);
       const data = await response.json();
       setProducts(data);
     } catch (error) {
@@ -34,7 +34,7 @@ function DisplayProducts({ refreshTrigger, socket, route }) {
     if (!emailToFetch) return; 
     
     try {
-      const response = await fetch(`/api/cart/${emailToFetch}`);
+      const response = await fetch(`https://karoo-production.up.railway.app/api/cart/${emailToFetch}` || `/api/cart/${emailToFetch}`);
       if (!response.ok) throw new Error('Failed to fetch cart');
       
       const cartData = await response.json();
@@ -96,7 +96,7 @@ function DisplayProducts({ refreshTrigger, socket, route }) {
     setLoadingAction(prev => ({ ...prev, [pid]: true }));
 
     try {
-      const endpoint = currentlyInCart ? '/api/cart/remove' : '/api/cart/add';
+      const endpoint = currentlyInCart ? `https://karoo-production.up.railway.app/api/cart/remove` || '/api/cart/remove' : `https://karoo-production.up.railway.app/api/cart/add` || '/api/cart/add';
       const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -131,6 +131,8 @@ function DisplayProducts({ refreshTrigger, socket, route }) {
         {products.map(product => {
           const imageName = (product.hasImage ? product.name : 'PlaceholderProduct') + '.jpg';
           const inCart = isProductInCart(product._id || product.pid);
+          const backendUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
+          const imageLink = `${backendUrl}/images/product_images/${imageName}`;
           return (
             <div key={product.pid} className="product-card">
               <img src={`/images/product_images/${imageName}`} alt={product.title} />

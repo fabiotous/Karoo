@@ -11,7 +11,7 @@ function DisplayCart({ refreshTrigger, socket }) {
     
     try {
       const timestamp = new Date().getTime();
-      const response = await fetch(`/api/cart/${emailToFetch}?t=${timestamp}`);
+      const response = await fetch(`https://karoo-production.up.railway.app/api/cart/${emailToFetch}?t=${timestamp}` || `/api/cart/${emailToFetch}?t=${timestamp}`);
       if (!response.ok) throw new Error('Failed to fetch cart');
       
       const cartData = await response.json();
